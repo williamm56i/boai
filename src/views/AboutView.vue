@@ -4,7 +4,7 @@
     <section class="second">
       <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :responsiveOptions="responsiveOptions">
         <template #item="slotProps">
-          <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :imageUrl="slotProps.data.image"></BoaiCard>
+          <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :image-url="slotProps.data.image"></BoaiCard>
         </template>
       </Carousel>
     </section>

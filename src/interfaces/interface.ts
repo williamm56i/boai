@@ -10,3 +10,11 @@ export interface CardItem {
     image: string,
     subtitle: string
 }
+export interface MgrItem {
+    position: string,
+    imageUrl: string,
+    title: string,
+    name: string,
+    description: string,
+    description2?: string
+}
