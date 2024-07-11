@@ -2,7 +2,7 @@
   <div class="about">
     <section><img src="../../src/assets/about.jpg" width="100%" /></section>
     <section class="second">
-      <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :responsiveOptions="responsiveOptions">
+      <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="3000" :responsiveOptions="responsiveOptions">
         <template #item="slotProps">
           <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :image-url="slotProps.data.image"></BoaiCard>
         </template>

@@ -1,15 +1,17 @@
 <template>
     <div v-if="position === 'left'" class="mgr-info">
         <img :src="imageUrl" class="photo" width="30%" />
-        <div class="info">
+        <div class="info-left">
             <h2>{{ title }} - {{ name }}</h2>
-            <h4>{{ description }} <br /> {{ description2 }}</h4>
+            <div>{{ description }}</div>
+            <div> {{ description2 }}</div>
         </div>
     </div>
     <div v-if="position === 'right'" class="mgr-info">
-        <div class="info">
+        <div class="info-right">
             <h2>{{ title }} - {{ name }}</h2>
-            <h4>{{ description }} <br /> {{ description2 }}</h4>
+            <div>{{ description }} </div>
+            <div> {{ description2 }}</div>
         </div>
         <img :src="imageUrl" class="photo" width="30%" />
     </div>
@@ -34,9 +36,16 @@ defineProps<{
     padding: 10px 10px 10px 10px;
     border-radius: 5px;
 }
-.mgr-info > .info {
+.mgr-info > .info-left {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+}
+.mgr-info > .info-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
 }
 </style>
