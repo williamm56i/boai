@@ -4,17 +4,7 @@
     <section class="second">
       <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :responsiveOptions="responsiveOptions">
         <template #item="slotProps">
-          <Card>
-            <template #header>
-              <h2>{{ slotProps.data.title }}</h2>
-            </template>
-            <template #subtitle>
-              {{ slotProps.data.subtitle }}
-            </template>
-            <template #content>
-              <img :src="slotProps.data.image" width="100%" />
-            </template>
-          </Card>
+          <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :imageUrl="slotProps.data.image"></BoaiCard>
         </template>
       </Carousel>
     </section>
@@ -24,6 +14,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { CardItem } from '../interfaces/interface';
+import BoaiCard from '../components/card/BoaiCard.vue';
 const products = ref<CardItem[]>([
   {
     title: '反毒桌遊',
@@ -82,11 +73,6 @@ const responsiveOptions = ref([
 
 .second {
   background: linear-gradient(to left, rgba(253, 208, 0, 1) 40%, rgba(253, 208, 0, 0) 70%);
-}
-
-.p-card {
-  border-radius: 20px;
-  margin: 20px 20px 20px 20px;
 }
 
 </style>
