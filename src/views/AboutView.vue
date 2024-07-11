@@ -17,24 +17,24 @@ import { CardItem } from '../interfaces/interface';
 import BoaiCard from '../components/card/BoaiCard.vue';
 const products = ref<CardItem[]>([
   {
-    title: '反毒桌遊',
+    title: '我支持．台灣無毒 ',
     image: '../../src/assets/boardgame.jpg',
-    subtitle: '遠離哈門陷阱'
+    subtitle: '讓台灣成為無毒家園，反毒教育從小做起'
   },
   {
+    title: '運算思維聯盟',
+    image: '../../src/assets/little_scientist1.jpeg',
+    subtitle: '建立孩子解決問題的能力，從運算思維開始'
+  },
+  {
+    title: '就是市集 All Hands',
+    image: '../../src/assets/book.jpg',
+    subtitle: '由大量的閱讀，建立良好的思維'
+  },
+    {
     title: '青銀共煮',
     image: '../../src/assets/cook.jpeg',
-    subtitle: '咱兜灶跤的古早味計畫'
-  },
-  {
-    title: '小小科學家',
-    image: '../../src/assets/little_scientist1.jpeg',
-    subtitle: '問題拆解．抽象歸納'
-  },
-  {
-    title: '好書交換',
-    image: '../../src/assets/book.jpg',
-    subtitle: '書中自有黃金屋'
+    subtitle: '惜食，福利，跨世代共煮交流。'
   }
 ]);
 const responsiveOptions = ref([
