@@ -14,6 +14,5 @@
   flex-grow: 1;
   background: #ffffff;
   text-align: center;
-  height: 100vh;
 }
 </style>
