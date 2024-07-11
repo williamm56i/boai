@@ -31,7 +31,7 @@ const managers = ref<MgrItem[]>([
         imageUrl: '../../src/assets/man_andy.jpg',
         title: '財務長',
         name: '莊淵智',
-        description: '中正里學院資工所 碩士',
+        description: '中正理工學院資訊工程研究所 碩士',
         description2: '中山科學研究院 中校'
     },    
     {
@@ -54,6 +54,13 @@ const managers = ref<MgrItem[]>([
         title: '設計總監',
         name: 'Fren Fan',
         description: ''
+    }, 
+    {
+        position: 'left',
+        imageUrl: '../../src/assets/audit.jpeg',
+        title: '監察人',
+        name: '陳妍希',
+        description: '昌福托嬰中心 陶釉班'
     }
 ]);
 const updateScreenSize = () => {
