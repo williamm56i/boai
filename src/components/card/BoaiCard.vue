@@ -22,5 +22,7 @@ defineProps<{
 .p-card {
   border-radius: 20px;
   margin: 20px 20px 20px 20px;
+  padding-top: 10px;
 }
+
 </style>
