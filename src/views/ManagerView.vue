@@ -13,7 +13,7 @@ import { MgrItem } from '../interfaces/interface';
 const managers = ref<MgrItem[]>([
     {
         position: 'left',
-        imageUrl: '../../src/assets/honorChairman.jpg',
+        imageUrl: '../../src/assets/man_chang.jpg',
         title: '榮譽理事長',
         name: '張誠',
         description: '伊利諾大學香檳校區電腦科學 博士',
@@ -28,54 +28,32 @@ const managers = ref<MgrItem[]>([
     },
     {
         position: 'left',
-        imageUrl: '../../src/assets/secretary.jpeg',
-        title: '執行秘書',
-        name: '李凱西',
-        description: '政治大學企業管理研究所 碩士'
-    },
-    {
-        position: 'left',
-        imageUrl: '../../src/assets/pr.jpeg',
-        title: '公關長',
-        name: '李永昌',
-        description: '台灣大學電機工程研究所 碩士'
-    },
-    {
-        position: 'left',
-        imageUrl: '../../src/assets/finance.jpeg',
+        imageUrl: '../../src/assets/man_andy.jpg',
         title: '財務長',
         name: '莊淵智',
-        description: '中正理工學院機械工程系 學士',
+        description: '中正里學院資工所 碩士',
         description2: '中山科學研究院 中校'
-    },
+    },    
     {
         position: 'left',
-        imageUrl: '../../src/assets/audit.jpeg',
-        title: '監察人',
-        name: '蔡宗良',
-        description: '交通大學資訊工程研究所 博士',
-    },
-    {
-        position: 'left',
-        imageUrl: '../../src/assets/honorChairman.jpg',
-        title: '榮譽理事長',
-        name: '張誠',
-        description: '伊利諾大學香檳校區電腦科學 博士',
-        description2: '前雄三飛彈專案總工程師'
-    },
-    {
-        position: 'left',
-        imageUrl: '../../src/assets/chairman.jpeg',
-        title: '理事長',
-        name: '陳郁婷',
-        description: '台灣大學資訊管理研究所 碩士'
-    },
-    {
-        position: 'left',
-        imageUrl: '../../src/assets/secretary.jpeg',
+        imageUrl: '../../src/assets/man_cathy.jpg',
         title: '執行秘書',
         name: '李凱西',
-        description: '政治大學企業管理研究所 碩士'
+        description: ''
+    },
+    {
+        position: 'left',
+        imageUrl: '../../src/assets/man_youn.jpg',
+        title: '公關長',
+        name: '李永昌',
+        description: ''
+    }, 
+    {
+        position: 'left',
+        imageUrl: '../../src/assets/man_fren.jpg',
+        title: '設計總監',
+        name: 'Fren Fan',
+        description: ''
     }
 ]);
 const updateScreenSize = () => {
@@ -124,13 +102,13 @@ onUnmounted(() => {
 .mgr-left {
     display: flex;
     flex-direction: row;
-    background: linear-gradient(to right, rgba(23, 187, 239, 1) 40%, rgba(23, 187, 239, 0) 70%);
+    background: linear-gradient(to right, rgb(161, 221, 239) 40%, rgba(23, 187, 239, 0) 70%);
 }
 
 .mgr-right {
     display: flex;
     flex-wrap: wrap;
-    background: linear-gradient(to left, rgba(23, 187, 239, 1) 40%, rgba(23, 187, 239, 0) 70%);
+    background: linear-gradient(to left, rgb(161, 221, 239) 40%, rgba(23, 187, 239, 0) 70%);
 }
 
 .person {

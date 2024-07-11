@@ -35,7 +35,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  background: #000000;
+  background: #5cc7e7;
   color: #ffffff;
   font-size: 12px;
   text-align: left;

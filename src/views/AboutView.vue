@@ -72,7 +72,7 @@ const responsiveOptions = ref([
 }
 
 .second {
-  background: linear-gradient(to left, rgba(253, 208, 0, 1) 40%, rgba(253, 208, 0, 0) 70%);
+  background: linear-gradient(to left, rgb(238, 226, 171) 40%, rgba(253, 208, 0, 0) 70%);
 }
 
 </style>
