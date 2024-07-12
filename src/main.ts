@@ -17,6 +17,7 @@ import Carousel from 'primevue/carousel';
 import Divider from 'primevue/divider';
 import ProgressSpinner from 'primevue/progressspinner';
 import Skeleton from 'primevue/skeleton';
+import Dialog from 'primevue/dialog';
 
 createApp(App)
     .use(PrimeVue)
@@ -34,5 +35,6 @@ createApp(App)
     .component('Divider', Divider)
     .component('ProgressSpinner', ProgressSpinner)
     .component('Skeleton', Skeleton)
+    .component('Dialog', Dialog)
     .use(router)
     .mount('#app');

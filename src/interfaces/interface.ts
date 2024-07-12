@@ -18,3 +18,8 @@ export interface MgrItem {
     description: string,
     description2?: string
 }
+export interface DialogItem {
+    header: string,
+    imageUrl?: string,
+    content: string
+}

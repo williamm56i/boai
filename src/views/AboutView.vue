@@ -7,17 +7,22 @@
     <section class="second">
       <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="3000" :responsiveOptions="responsiveOptions">
         <template #item="slotProps">
-          <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :image-url="slotProps.data.image"></BoaiCard>
+          <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :image-url="slotProps.data.image" @click="handleCardClick(slotProps.data)"></BoaiCard>
         </template>
       </Carousel>
     </section>
   </div>
+  <Dialog v-model:visible="dialogVisible" modal :header="dialogInfo.header" :style="{width: '50%'}" :breakpoints="{ '1200px': '60%', '800px': '80%'}">
+    <img :src="dialogInfo.imageUrl" width="100%"/>
+    <p>{{ dialogInfo.content }}</p>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { CardItem } from '../interfaces/interface';
+import { CardItem, DialogItem } from '../interfaces/interface';
 import BoaiCard from '../components/card/BoaiCard.vue';
+const dialogVisible = ref(false);
 const products = ref<CardItem[]>([
   {
     title: '我支持．台灣無毒 ',
@@ -55,6 +60,16 @@ const responsiveOptions = ref([
 const isImageLoaded = ref(false);
 const handleImageLoading = () => {
     isImageLoaded.value = true;
+}
+let dialogInfo = ref<DialogItem>({
+  header: '',
+  content: ''
+})
+const handleCardClick = (data: CardItem) => {
+  dialogInfo.value.header = data.title;
+  dialogInfo.value.imageUrl = data.image;
+  dialogInfo.value.content = data.subtitle;
+  dialogVisible.value = true;
 }
 </script>
 
