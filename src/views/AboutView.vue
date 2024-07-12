@@ -1,6 +1,9 @@
 <template>
   <div class="about">
-    <section><img src="../../src/assets/about.jpg" width="100%" /></section>
+    <section>
+      <img src="../../src/assets/about.jpg" width="100%" @load="handleImageLoading" v-show="isImageLoaded" />
+      <Skeleton v-show="!isImageLoaded" width="100%" height="30rem"></Skeleton>
+    </section>
     <section class="second">
       <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="3000" :responsiveOptions="responsiveOptions">
         <template #item="slotProps">
@@ -48,7 +51,11 @@ const responsiveOptions = ref([
     numVisible: 1,
     numScroll: 1
   },
-])
+]);
+const isImageLoaded = ref(false);
+const handleImageLoading = () => {
+    isImageLoaded.value = true;
+}
 </script>
 
 <style scoped>
