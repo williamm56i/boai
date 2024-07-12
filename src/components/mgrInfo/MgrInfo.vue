@@ -1,22 +1,31 @@
 <template>
     <div v-if="position === 'left'" class="mgr-info">
-        <img :src="imageUrl" class="photo" width="30%" />
+        <img :src="imageUrl" class="photo" width="40%" @load="handleImageLoading" v-show="isImageLoaded"/>
+        <Skeleton v-show="!isImageLoaded" width="10rem" height="13rem"></Skeleton>
         <div class="info-left">
-            <h2>{{ title }} - {{ name }}</h2>
-            <div>{{ description }}</div>
-            <div> {{ description2 }}</div>
+            <h2 v-show="isImageLoaded">{{ title }} - {{ name }}</h2>
+            <Skeleton v-show="!isImageLoaded" width="8rem" class="mb-2"></Skeleton>
+            <div v-show="isImageLoaded">{{ description }}</div>
+            <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
+            <div v-show="isImageLoaded"> {{ description2 }}</div>
+            <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
         </div>
     </div>
     <div v-if="position === 'right'" class="mgr-info">
         <div class="info-right">
-            <h2>{{ title }} - {{ name }}</h2>
-            <div>{{ description }} </div>
-            <div> {{ description2 }}</div>
+            <h2 v-show="isImageLoaded">{{ title }} - {{ name }}</h2>
+            <Skeleton v-show="!isImageLoaded" width="8rem" class="mb-2"></Skeleton>
+            <div v-show="isImageLoaded">{{ description }}</div>
+            <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
+            <div v-show="isImageLoaded"> {{ description2 }}</div>
+            <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
         </div>
-        <img :src="imageUrl" class="photo" width="30%" />
+        <img :src="imageUrl" class="photo" width="40%" @load="handleImageLoading" v-show="isImageLoaded" />
+        <Skeleton v-show="!isImageLoaded" width="10rem" height="13rem"></Skeleton>
     </div>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue';
 defineProps<{
     position: string,
     imageUrl: string,
@@ -25,6 +34,10 @@ defineProps<{
     description: string,
     description2?: string
 }>();
+const isImageLoaded = ref(false);
+const handleImageLoading = () => {
+    isImageLoaded.value = true;
+}
 </script>
 <style scoped>
 .mgr-info {
@@ -32,17 +45,20 @@ defineProps<{
     flex-direction: row;
     justify-content: space-evenly;
 }
-.mgr-info > .photo {
+
+.mgr-info>.photo {
     padding: 10px 10px 10px 10px;
     border-radius: 5px;
 }
-.mgr-info > .info-left {
+
+.mgr-info>.info-left {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
 }
-.mgr-info > .info-right {
+
+.mgr-info>.info-right {
     display: flex;
     flex-direction: column;
     justify-content: center;
