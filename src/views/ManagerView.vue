@@ -1,10 +1,10 @@
 <template>
-    <section class="mgr-right">
+    <div class="mgr">
         <div class="person" v-for="mgr in managers">
             <MgrInfo :position="mgr.position" :image-url="mgr.imageUrl" :title="mgr.title" :name="mgr.name"
                 :description="mgr.description" :description2="mgr.description2"></MgrInfo>
         </div>
-    </section>
+    </div>
 </template>
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
@@ -33,7 +33,7 @@ const managers = ref<MgrItem[]>([
         name: '莊淵智',
         description: '中正理工學院資訊工程研究所 碩士',
         description2: '中山科學研究院 中校'
-    },    
+    },
     {
         position: 'left',
         imageUrl: '../../src/assets/man_cathy.jpg',
@@ -47,14 +47,14 @@ const managers = ref<MgrItem[]>([
         title: '公關長',
         name: '李永昌',
         description: ''
-    }, 
+    },
     {
         position: 'left',
         imageUrl: '../../src/assets/man_fren.jpg',
         title: '設計總監',
         name: 'Fren Fan',
         description: ''
-    }, 
+    },
     {
         position: 'left',
         imageUrl: '../../src/assets/audit.jpeg',
@@ -65,14 +65,14 @@ const managers = ref<MgrItem[]>([
 ]);
 const updateScreenSize = () => {
     const width = window.innerWidth;
-      if (width < 800) {
-        managers.value.forEach( (mgr, index) => {
+    if (width < 800) {
+        managers.value.forEach((mgr, index) => {
             mgr.position = index % 2 === 0 ? 'left' : 'right';
         });
-      } else if (width < 1200) {
+    } else if (width < 1200) {
         let count = 2;
         let p = 'left';
-        managers.value.forEach( mgr => {
+        managers.value.forEach(mgr => {
             if (count != 0) {
                 mgr.position = p;
                 count--;
@@ -82,10 +82,10 @@ const updateScreenSize = () => {
                 mgr.position = p;
             }
         });
-      } else {
+    } else {
         let count = 3;
         let p = 'left';
-        managers.value.forEach( mgr => {
+        managers.value.forEach(mgr => {
             if (count != 0) {
                 mgr.position = p;
                 count--;
@@ -95,7 +95,7 @@ const updateScreenSize = () => {
                 mgr.position = p;
             }
         });
-      }
+    }
 };
 onMounted(() => {
     updateScreenSize();
@@ -106,13 +106,7 @@ onUnmounted(() => {
 })
 </script>
 <style scoped>
-.mgr-left {
-    display: flex;
-    flex-direction: row;
-    background: linear-gradient(to right, rgb(161, 221, 239) 40%, rgba(23, 187, 239, 0) 70%);
-}
-
-.mgr-right {
+.mgr {
     display: flex;
     flex-wrap: wrap;
     background: linear-gradient(to left, rgb(161, 221, 239) 40%, rgba(23, 187, 239, 0) 70%);

@@ -68,7 +68,7 @@ let dialogInfo = ref<DialogItem>({
 const handleCardClick = (data: CardItem) => {
   dialogInfo.value.header = data.title;
   dialogInfo.value.imageUrl = data.image;
-  dialogInfo.value.content = data.subtitle;
+  dialogInfo.value.content = data.subtitle + data.subtitle + data.subtitle + data.subtitle + data.subtitle;
   dialogVisible.value = true;
 }
 </script>

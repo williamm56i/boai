@@ -30,5 +30,7 @@ const handleImageLoading = () => {
   margin: 20px 20px 20px 20px;
   padding-top: 10px;
 }
-
+.p-card:hover {
+    transform: translate(-5px, -5px);
+}
 </style>
