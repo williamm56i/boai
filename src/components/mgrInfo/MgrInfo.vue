@@ -1,24 +1,32 @@
 <template>
     <div v-if="position === 'left'" class="mgr-info">
-        <img :src="imageUrl" class="photo" width="40%" @load="handleImageLoading" v-show="isImageLoaded"/>
+        <img :src="imageUrl" class="photo" width="40%" @load="handleImageLoading" v-show="isImageLoaded" />
         <Skeleton v-show="!isImageLoaded" width="10rem" height="13rem"></Skeleton>
         <div class="info-left">
             <h2 v-show="isImageLoaded">{{ title }} - {{ name }}</h2>
             <Skeleton v-show="!isImageLoaded" width="8rem" class="mb-2"></Skeleton>
-            <div v-show="isImageLoaded">{{ description }}</div>
-            <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
-            <div v-show="isImageLoaded"> {{ description2 }}</div>
-            <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
+            <span style="font-size: 12px;">
+                <div v-show="isImageLoaded">{{ description }}</div>
+                <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
+            </span>
+            <span style="font-size:  12px;">
+                <div v-show="isImageLoaded"> {{ description2 }}</div>
+                <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
+            </span>
         </div>
     </div>
     <div v-if="position === 'right'" class="mgr-info">
         <div class="info-right">
             <h2 v-show="isImageLoaded">{{ title }} - {{ name }}</h2>
             <Skeleton v-show="!isImageLoaded" width="8rem" class="mb-2"></Skeleton>
-            <div v-show="isImageLoaded">{{ description }}</div>
-            <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
-            <div v-show="isImageLoaded"> {{ description2 }}</div>
-            <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
+            <span style="font-size: 12px;">
+                <div v-show="isImageLoaded">{{ description }}</div>
+                <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
+            </span>
+            <span style="font-size: 12px;">
+                <div v-show="isImageLoaded"> {{ description2 }}</div>
+                <Skeleton v-show="!isImageLoaded" width="10rem" class="mb-2"></Skeleton>
+            </span>
         </div>
         <img :src="imageUrl" class="photo" width="40%" @load="handleImageLoading" v-show="isImageLoaded" />
         <Skeleton v-show="!isImageLoaded" width="10rem" height="13rem"></Skeleton>
@@ -48,7 +56,7 @@ const handleImageLoading = () => {
 
 .mgr-info>.photo {
     padding: 10px 10px 10px 10px;
-    border-radius: 5px;
+    border-radius: 20px;
 }
 
 .mgr-info>.info-left {
