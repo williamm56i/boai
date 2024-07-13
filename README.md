@@ -7,3 +7,9 @@
 npm install
 npm run dev
 ```
+
+### Run with Docker
+```
+docker build -t boai .
+docker run --name -p 80:80 -d boai
+```
