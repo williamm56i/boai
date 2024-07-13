@@ -5,7 +5,7 @@
       <Skeleton v-show="!isImageLoaded" width="100%" height="30rem"></Skeleton>
     </section>
     <section class="second">
-      <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="3000" :responsiveOptions="responsiveOptions">
+      <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="5000" :responsiveOptions="responsiveOptions">
         <template #item="slotProps">
           <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :image-url="slotProps.data.image" @click="handleCardClick(slotProps.data)"></BoaiCard>
         </template>
