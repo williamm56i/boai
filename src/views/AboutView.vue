@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <section>
-      <img src="../../src/assets/about.jpg" width="100%" @load="handleImageLoading" v-show="isImageLoaded" />
+      <img src="/about.jpg" width="100%" @load="handleImageLoading" v-show="isImageLoaded" />
       <Skeleton v-show="!isImageLoaded" width="100%" height="30rem"></Skeleton>
     </section>
     <section class="second">
@@ -26,22 +26,22 @@ const dialogVisible = ref(false);
 const products = ref<CardItem[]>([
   {
     title: '我支持．台灣無毒 ',
-    image: '../../src/assets/boardgame.jpg',
+    image: '/boardgame.jpg',
     subtitle: '讓台灣成為無毒家園，反毒教育從小做起'
   },
   {
     title: '運算思維聯盟',
-    image: '../../src/assets/little_scientist1.jpeg',
+    image: 'little_scientist1.jpg',
     subtitle: '建立孩子解決問題的能力，從運算思維開始'
   },
   {
     title: '就是市集 All Hands',
-    image: '../../src/assets/book.jpg',
+    image: '/book.jpg',
     subtitle: '由大量的閱讀，建立良好的思維'
   },
     {
     title: '青銀共煮',
-    image: '../../src/assets/cook.jpeg',
+    image: '/cook.jpg',
     subtitle: '惜食，福利，跨世代共煮交流。'
   }
 ]);

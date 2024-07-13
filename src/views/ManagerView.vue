@@ -13,7 +13,7 @@ import { MgrItem } from '../interfaces/interface';
 const managers = ref<MgrItem[]>([
     {
         position: 'left',
-        imageUrl: '../../src/assets/man_chang.jpg',
+        imageUrl: '/man_chang.jpg',
         title: '榮譽理事長',
         name: '張誠',
         description: '伊利諾大學香檳校區電腦科學 博士',
@@ -21,14 +21,14 @@ const managers = ref<MgrItem[]>([
     },
     {
         position: 'left',
-        imageUrl: '../../src/assets/chairman.jpeg',
+        imageUrl: '/chairman.jpg',
         title: '理事長',
         name: '陳郁婷',
         description: '台灣大學資訊管理研究所 碩士'
     },
     {
         position: 'left',
-        imageUrl: '../../src/assets/man_andy.jpg',
+        imageUrl: '/man_andy.jpg',
         title: '財務長',
         name: '莊淵智',
         description: '中正理工學院資訊工程研究所 碩士',
@@ -36,28 +36,28 @@ const managers = ref<MgrItem[]>([
     },
     {
         position: 'left',
-        imageUrl: '../../src/assets/man_cathy.jpg',
+        imageUrl: '/man_cathy.jpg',
         title: '執行秘書',
         name: '李凱西',
         description: ''
     },
     {
         position: 'left',
-        imageUrl: '../../src/assets/man_youn.jpg',
+        imageUrl: '/man_youn.jpg',
         title: '公關長',
         name: '李永昌',
         description: ''
     },
     {
         position: 'left',
-        imageUrl: '../../src/assets/man_fren.jpg',
+        imageUrl: '/man_fren.jpg',
         title: '設計總監',
         name: 'Fren Fan',
         description: ''
     },
     {
         position: 'left',
-        imageUrl: '../../src/assets/audit.jpeg',
+        imageUrl: '/audit.jpg',
         title: '監察人',
         name: '陳妍希',
         description: '昌福托嬰中心 陶釉班'

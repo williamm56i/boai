@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
-    <img src="../../assets/IMG_2911.PNG" class="large-footer" width="180px" />
-    <img src="../../assets/icon.PNG" class="small-footer" width="90px" />
+    <img src="/IMG_2911.png" class="large-footer" width="180px" />
+    <img src="/icon.png" class="small-footer" width="90px" />
     <table style="margin-left: 30px; margin-top: 5px;">
       <tr>
         <td colspan="2">聯絡我們&nbsp;<i class="pi pi-facebook"></i>&nbsp;<i class="pi pi-instagram"></i></td>

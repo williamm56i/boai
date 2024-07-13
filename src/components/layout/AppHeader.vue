@@ -3,15 +3,15 @@
         <!-- header area content -->
         <div class="content">
             <div class="banner">
-                <img src="../../assets/banner.png" class="large-banner" width="350px" />
-                <img src="../../assets/banner.png" class="small-banner" width="200px" />
+                <img src="/banner.png" class="large-banner" width="350px" />
+                <img src="/banner.png" class="small-banner" width="200px" />
             </div>
             <div class="menu">
                 <TabMenu :model="items">
                     <template #item="{ item, props }">
                         <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
                             <a :href="href" v-bind="props.action" @click="navigate">
-                                <img src="../../assets/icon.PNG" style="width: 28px; margin-right: 10px;" />
+                                <img src="/icon.png" style="width: 28px; margin-right: 10px;" />
                                 <span v-bind="props.label">{{ item.label }}</span>
                             </a>
                         </router-link>
