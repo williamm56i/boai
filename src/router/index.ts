@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import LayoutComponent from '../components/layout/LayoutComponent.vue'
+import apiClient from '../request/request';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -26,6 +27,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/activity',
         name: '活動資訊',
         component: () => import('../views/ActivityView.vue')
+      },
+      {
+        path: '/activityDetail/:id',
+        name: '活動明細',
+        component: () => import('../views/ActivityDetailView.vue')
       }
     ]
   }
@@ -36,4 +42,17 @@ const router = createRouter({
   routes
 });
 
+router.beforeEach(async (to, from, next) => {
+  if (!localStorage.getItem('jwt')) {
+    await apiClient.get('/api/system/generateToken?account=B0132').then(res => {
+      localStorage.setItem('jwt', res.data);
+      next();
+    }).catch(err => {
+      console.error(err);
+      next(); // temp
+    })
+  } else {
+    next();
+  }
+});
 export default router

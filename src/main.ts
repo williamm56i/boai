@@ -19,6 +19,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 import Skeleton from 'primevue/skeleton';
 import Dialog from 'primevue/dialog';
 import Fieldset from 'primevue/fieldset';
+import Panel from 'primevue/panel';
 
 createApp(App)
     .use(PrimeVue)
@@ -38,5 +39,6 @@ createApp(App)
     .component('Skeleton', Skeleton)
     .component('Dialog', Dialog)
     .component('Fieldset', Fieldset)
+    .component('Panel', Panel)
     .use(router)
     .mount('#app');
