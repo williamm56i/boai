@@ -6,9 +6,11 @@ export interface MenuItem {
     items?: MenuItem[];
 };
 export interface CardItem {
+    id: string,
     title: string,
     image: string,
-    subtitle: string
+    subtitle: string,
+    content: string
 }
 export interface MgrItem {
     position: string,
@@ -20,6 +22,6 @@ export interface MgrItem {
 }
 export interface DialogItem {
     header: string,
-    imageUrl?: string,
+    imageUrl: string,
     content: string
 }

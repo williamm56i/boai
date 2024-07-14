@@ -19,30 +19,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { CardItem, DialogItem } from '../interfaces/interface';
 import BoaiCard from '../components/card/BoaiCard.vue';
+import apiClient from '../request/request';
 const dialogVisible = ref(false);
 const products = ref<CardItem[]>([
   {
+    id: '1',
     title: '我支持．台灣無毒 ',
     image: '/boardgame.jpg',
-    subtitle: '讓台灣成為無毒家園，反毒教育從小做起'
+    subtitle: '讓台灣成為無毒家園，反毒教育從小做起',
+    content: '讓台灣成為無毒家園，反毒教育從小做起讓台灣成為無毒家園，反毒教育從小做起'
   },
   {
+    id: '2',
     title: '運算思維聯盟',
-    image: 'little_scientist1.jpg',
-    subtitle: '建立孩子解決問題的能力，從運算思維開始'
+    image: '/little_scientist1.jpg',
+    subtitle: '建立孩子解決問題的能力，從運算思維開始',
+    content: '建立孩子解決問題的能力，從運算思維開始建立孩子解決問題的能力，從運算思維開始'
   },
   {
+    id: '3',
     title: '就是市集 All Hands',
     image: '/book.jpg',
-    subtitle: '由大量的閱讀，建立良好的思維'
+    subtitle: '由大量的閱讀，建立良好的思維',
+    content: '由大量的閱讀，建立良好的思由大量的閱讀，建立良好的思'
   },
-    {
+  {
+    id: '4',
     title: '青銀共煮',
     image: '/cook.jpg',
-    subtitle: '惜食，福利，跨世代共煮交流。'
+    subtitle: '惜食，福利，跨世代共煮交流。',
+    content: '惜食，福利，跨世代共煮交流惜食，福利，跨世代共煮交流'
   }
 ]);
 const responsiveOptions = ref([
@@ -63,14 +72,25 @@ const handleImageLoading = () => {
 }
 let dialogInfo = ref<DialogItem>({
   header: '',
+  imageUrl: '',
   content: ''
 })
 const handleCardClick = (data: CardItem) => {
   dialogInfo.value.header = data.title;
   dialogInfo.value.imageUrl = data.image;
-  dialogInfo.value.content = data.subtitle + data.subtitle + data.subtitle + data.subtitle + data.subtitle;
+  dialogInfo.value.content = data.content;
   dialogVisible.value = true;
 }
+const getAboutInfo = async () => {
+  apiClient.get('/api/aboutInfo/getAboutInfo').then(res => {
+    products.value = res.data;
+  }).catch(err => {
+    console.error(err);
+  });
+}
+onMounted(() => {
+  getAboutInfo();
+})
 </script>
 
 <style scoped>
