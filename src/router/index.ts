@@ -32,8 +32,13 @@ const routes: Array<RouteRecordRaw> = [
         path: '/activityDetail/:id',
         name: '活動明細',
         component: () => import('../views/ActivityDetailView.vue')
-      }
+      },
     ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/LoginView.vue')
   }
 ];
 
@@ -43,14 +48,18 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  if (!localStorage.getItem('jwt')) {
-    await apiClient.get('/api/system/generateToken?account=B0132').then(res => {
-      localStorage.setItem('jwt', res.data);
+  if (to.path !== '/login') {
+    if (!localStorage.getItem('jwt')) {
+      await apiClient.get('/api/system/generateToken?account=GUEST').then(res => {
+        localStorage.setItem('jwt', res.data);
+        next();
+      }).catch(err => {
+        console.error(err);
+        next(); // temp
+      })
+    } else {
       next();
-    }).catch(err => {
-      console.error(err);
-      next(); // temp
-    })
+    }
   } else {
     next();
   }

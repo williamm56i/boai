@@ -34,17 +34,31 @@
 </template>
 
 <script setup lang="ts">
-import { MenuItem } from '../../interfaces/interface';
-import { ref } from 'vue';
+import { jwtDecode } from "jwt-decode";
+import { JwtPayload, MenuItem } from '../../interfaces/interface';
+import { onMounted, ref } from 'vue';
 const items = ref<MenuItem[]>([
     { label: '關於我們', route: '/about' },
     { label: '經營團隊', route: '/manager' },
-    { label: '活動資訊', route: '/activity' }
+    { label: '活動資訊', route: '/activity' },
 ]);
 const popupMenu = ref();
 const toggle = (event: any) => {
     popupMenu.value.toggle(event);
 }
+const authCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+        const payload = jwtDecode<JwtPayload>(jwt);
+        console.log(payload);
+        if (payload.roles.includes('ROLE_ADMIN')) {
+            items.value.push({label: '後台管理', route: '/admin'});
+        }
+    }
+}
+onMounted( () => {
+    authCheck();
+})
 </script>
 
 <style scoped>

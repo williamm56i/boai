@@ -10,7 +10,7 @@ export interface CardItem {
     title: string,
     image: string,
     subtitle: string,
-    content: string
+    content?: string
 }
 export interface MgrItem {
     position: string,
@@ -23,5 +23,10 @@ export interface MgrItem {
 export interface DialogItem {
     header: string,
     imageUrl: string,
-    content: string
+    content?: string
+}
+export interface JwtPayload {
+    sub: string,
+    exp: number,
+    roles: Array<String>
 }
