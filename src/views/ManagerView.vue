@@ -39,28 +39,32 @@ const managers = ref<MgrItem[]>([
         imageUrl: '/man_cathy.jpg',
         title: '執行秘書',
         name: '李凱西',
-        description: ''
+        description: '個人資訊第一行',
+        description2: '個人資訊第二行'
     },
     {
         position: 'left',
         imageUrl: '/man_youn.jpg',
         title: '公關長',
         name: '李永昌',
-        description: ''
+        description: '個人資訊第一行',
+        description2: '個人資訊第二行'
     },
     {
         position: 'left',
         imageUrl: '/man_fren.jpg',
         title: '設計總監',
         name: 'Fren Fan',
-        description: ''
+        description: '個人資訊第一行',
+        description2: '個人資訊第二行'
     },
     {
         position: 'left',
         imageUrl: '/audit.jpg',
         title: '監察人',
         name: '陳妍希',
-        description: '昌福托嬰中心 陶釉班'
+        description: '昌福托嬰中心 陶釉班',
+        description2: '昌福托嬰中心 琉璃班'
     }
 ]);
 const updateScreenSize = () => {

@@ -30,28 +30,28 @@ const products = ref<CardItem[]>([
     title: '我支持．台灣無毒 ',
     image: '/boardgame.jpg',
     subtitle: '讓台灣成為無毒家園，反毒教育從小做起',
-    content: '讓台灣成為無毒家園，反毒教育從小做起讓台灣成為無毒家園，反毒教育從小做起'
+    content: '讓台灣成為無毒家園，反毒教育從小做起讓台灣成為無毒家園，反毒教育從小做起front'
   },
   {
     id: '2',
     title: '運算思維聯盟',
     image: '/little_scientist1.jpg',
     subtitle: '建立孩子解決問題的能力，從運算思維開始',
-    content: '建立孩子解決問題的能力，從運算思維開始建立孩子解決問題的能力，從運算思維開始'
+    content: '建立孩子解決問題的能力，從運算思維開始建立孩子解決問題的能力，從運算思維開始front'
   },
   {
     id: '3',
     title: '就是市集 All Hands',
     image: '/book.jpg',
     subtitle: '由大量的閱讀，建立良好的思維',
-    content: '由大量的閱讀，建立良好的思由大量的閱讀，建立良好的思'
+    content: '由大量的閱讀，建立良好的思由大量的閱讀，建立良好的思front'
   },
   {
     id: '4',
     title: '青銀共煮',
     image: '/cook.jpg',
     subtitle: '惜食，福利，跨世代共煮交流。',
-    content: '惜食，福利，跨世代共煮交流惜食，福利，跨世代共煮交流'
+    content: '惜食，福利，跨世代共煮交流惜食，福利，跨世代共煮交流front'
   }
 ]);
 const responsiveOptions = ref([
