@@ -20,9 +20,14 @@ import Skeleton from 'primevue/skeleton';
 import Dialog from 'primevue/dialog';
 import Fieldset from 'primevue/fieldset';
 import Panel from 'primevue/panel';
+import Aura from '@primevue/themes/aura';
 
 createApp(App)
-    .use(PrimeVue)
+    .use(PrimeVue, {
+        theme: {
+            preset: Aura
+        }
+    })
     .component('PanelMenu', PanelMenu)
     .component('Breadcrumb', Breadcrumb)
     .component('Avatar', Avatar)
