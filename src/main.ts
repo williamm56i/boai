@@ -23,6 +23,7 @@ import Panel from 'primevue/panel';
 import Password from 'primevue/password';
 import Aura from '@primevue/themes/aura';
 import { definePreset } from '@primevue/themes';
+import FloatLabel from 'primevue/floatlabel';
 
 const BoaiPreset = definePreset(Aura, Aura, {
     semantic: {
@@ -66,5 +67,6 @@ createApp(App)
     .component('Fieldset', Fieldset)
     .component('Panel', Panel)
     .component('Password', Password)
+    .component('FloatLabel', FloatLabel)
     .use(router)
     .mount('#app');

@@ -30,3 +30,14 @@ export interface JwtPayload {
     exp: number,
     roles: Array<String>
 }
+export interface ColumnItem {
+    field: string,
+    header: string,
+    sortable?: boolean
+};
+export interface TablePage {
+    current: number,
+    pageSize: number,
+    sortBy: string,
+    desc: boolean
+}

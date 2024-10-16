@@ -33,6 +33,11 @@ const routes: Array<RouteRecordRaw> = [
         name: '活動明細',
         component: () => import('../views/ActivityDetailView.vue')
       },
+      {
+        path: '/admin',
+        name: '後台管理',
+        component: () => import('../views/AdminView.vue')
+      }
     ]
   },
   {
