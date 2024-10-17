@@ -25,6 +25,11 @@ import Aura from '@primevue/themes/aura';
 import { definePreset } from '@primevue/themes';
 import FloatLabel from 'primevue/floatlabel';
 import FileUpload from 'primevue/fileupload';
+import SelectButton from 'primevue/selectbutton';
+import Select from 'primevue/select';
+import Textarea from 'primevue/textarea';
+import Toast from 'primevue/toast';
+import ToastService from 'primevue/toastservice';
 
 const BoaiPreset = definePreset(Aura, Aura, {
     semantic: {
@@ -50,6 +55,7 @@ createApp(App)
             preset: BoaiPreset
         }
     })
+    .use(ToastService)
     .component('PanelMenu', PanelMenu)
     .component('Breadcrumb', Breadcrumb)
     .component('Avatar', Avatar)
@@ -70,5 +76,9 @@ createApp(App)
     .component('Password', Password)
     .component('FloatLabel', FloatLabel)
     .component('FileUpload', FileUpload)
+    .component('SelectButton', SelectButton)
+    .component('Select', Select)
+    .component('Textarea', Textarea)
+    .component('Toast', Toast)
     .use(router)
     .mount('#app');

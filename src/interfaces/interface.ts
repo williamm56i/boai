@@ -50,7 +50,7 @@ export interface AboutInfo {
     subtitle: string,
     enable: string,
     content: string,
-    image: string,
+    image: string | undefined,
     createId: string,
     createDate: string,
     updateId: string,
