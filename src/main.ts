@@ -24,6 +24,7 @@ import Password from 'primevue/password';
 import Aura from '@primevue/themes/aura';
 import { definePreset } from '@primevue/themes';
 import FloatLabel from 'primevue/floatlabel';
+import FileUpload from 'primevue/fileupload';
 
 const BoaiPreset = definePreset(Aura, Aura, {
     semantic: {
@@ -68,5 +69,6 @@ createApp(App)
     .component('Panel', Panel)
     .component('Password', Password)
     .component('FloatLabel', FloatLabel)
+    .component('FileUpload', FileUpload)
     .use(router)
     .mount('#app');

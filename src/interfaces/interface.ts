@@ -1,3 +1,6 @@
+import { isCombinedModifierFlagSet } from "tslint";
+import { inferRuntimeType } from "vue/compiler-sfc";
+
 export interface MenuItem {
     label: string;
     icon?: string;
@@ -40,4 +43,16 @@ export interface TablePage {
     pageSize: number,
     sortBy: string,
     desc: boolean
+}
+export interface AboutInfo {
+    id: string,
+    title: string,
+    subtitle: string,
+    enable: string,
+    content: string,
+    image: string,
+    createId: string,
+    createDate: string,
+    updateId: string,
+    updateDate: string 
 }

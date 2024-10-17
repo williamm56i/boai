@@ -94,7 +94,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 样式 */
 .about {
   position: relative;
   flex-grow: 1;
