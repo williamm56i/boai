@@ -41,6 +41,7 @@ let account = ref('');
 let pwd = ref('');
 const handleSubmit = async () => {
       if (account.value && pwd.value) {
+        localStorage.removeItem('jwt');
         await apiClient.get('/api/system/generateToken?account=' + account.value).then(res => {
             localStorage.setItem('jwt', res.data);
             router.push('/');

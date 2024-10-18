@@ -8,7 +8,7 @@
                 </FloatLabel>
                 <Button icon="pi pi-search" @click="handleSearch" style="margin-left: 5px;" />
             </div>
-            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount">
+            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading">
             </BoaiTable>
         </Panel>
     </div>
@@ -19,6 +19,7 @@ import { CardItem, ColumnItem, TablePage } from '../../interfaces/interface';
 import apiClient from '../../request/request';
 import BoaiTable from '../../components/table/BoaiTable.vue';
 const tableSize = 'small';
+let loading = false;
 let name = ref('');
 let data = ref<CardItem[]>([]);
 let totalCount = ref<number>(0);

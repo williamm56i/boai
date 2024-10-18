@@ -2,7 +2,7 @@
     <Card>
         <template #content>
             <DataTable paginator :size="size" :rows="pageSize" :totalRecords="totalCount" :rowsPerPageOptions="pageNumList" removableSort :value="data"
-                :selectionMode="selectionMode" v-model:selection="selectionRow" @click="handleClick">
+                :selectionMode="selectionMode" v-model:selection="selectionRow" :loading="loading" @click="handleClick">
                 <template #empty> No Data. </template>
                 <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header" :sortable="col.sortable"></Column>
             </DataTable>
@@ -16,7 +16,8 @@ defineProps<{
     data: Array<any>;
     columns: Array<ColumnItem>;
     size: any;
-    totalCount: number;
+    totalCount?: number;
+    loading: boolean;
     selectionMode?: any | undefined;
 }>();
 const pageSize = ref(5);

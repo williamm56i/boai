@@ -82,7 +82,7 @@ const handleCardClick = (data: CardItem) => {
   dialogVisible.value = true;
 }
 const getAboutInfo = async () => {
-  apiClient.get('/api/aboutInfo/getAboutInfo').then(res => {
+  apiClient.get('/api/aboutInfo/getAll').then(res => {
     products.value = res.data;
   }).catch(err => {
     console.error(err);

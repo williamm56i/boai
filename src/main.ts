@@ -30,6 +30,8 @@ import Select from 'primevue/select';
 import Textarea from 'primevue/textarea';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
+import ConfirmPopup from 'primevue/confirmpopup';
+import ConfirmationService from 'primevue/confirmationservice';
 
 const BoaiPreset = definePreset(Aura, Aura, {
     semantic: {
@@ -56,6 +58,7 @@ createApp(App)
         }
     })
     .use(ToastService)
+    .use(ConfirmationService)
     .component('PanelMenu', PanelMenu)
     .component('Breadcrumb', Breadcrumb)
     .component('Avatar', Avatar)
@@ -80,5 +83,6 @@ createApp(App)
     .component('Select', Select)
     .component('Textarea', Textarea)
     .component('Toast', Toast)
+    .component('ConfirmPopup', ConfirmPopup)
     .use(router)
     .mount('#app');

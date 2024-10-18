@@ -7,12 +7,13 @@
                     <label for="title">主題</label>
                     <InputText id="title" v-model="title" />
                 </FloatLabel>
+                <ConfirmPopup />
                 <Button icon="pi pi-search" style="margin-left: 5px;" @click="handleSearch" />
                 <Button icon="pi pi-plus" style="margin-left: 5px" @click="openCreateDialog" />
                 <Button icon="pi pi-pen-to-square" style="margin-left: 5px" @click="openModifyDialog" />
-                <Button icon="pi pi-trash" style="margin-left: 5px" @click="remove" />
+                <Button icon="pi pi-trash" style="margin-left: 5px" @click="removeConfirm" />
             </div>
-            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount"
+            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading"
                 :selectionMode="'single'" @selected-row="handleSelectedRow">
             </BoaiTable>
         </Panel>
@@ -33,7 +34,7 @@
                 <img :src="aboutInfo.image" width="300px" height="auto" />
             </div>
             <FileUpload ref="fileupload" mode="basic" name="aboutPhoto[]" accept="image/*" :maxFileSize="1000000"
-                :customUpload="true" @select="onSelectFile" />
+                :customUpload="true" chooseLabel="選擇圖片" @select="onSelectFile" />
             <table>
                 <tr>
                     <td>建立人員：{{ aboutInfo.createId }}</td>
@@ -54,12 +55,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useToast } from "primevue/usetoast";
-import { AboutInfo, CardItem, ColumnItem, TablePage } from '../../interfaces/interface';
+import { useConfirm } from "primevue/useconfirm";
+import { AboutInfo, CardItem, ColumnItem } from '../../interfaces/interface';
 import apiClient from '../../request/request';
 import BoaiTable from '../../components/table/BoaiTable.vue';
 
 const toast = useToast();
+const confirm = useConfirm();
 const tableSize = ref('small');
+let loading = ref(false);
 let title = ref('');
 let display = ref(false);
 let dialogType = ref('');
@@ -70,14 +74,8 @@ const enableOptions = ref([
 let data = ref<CardItem[]>([]);
 let selectedRow = ref<any>();
 let totalCount = ref<number>(0);
-let tablePage = ref<TablePage>({
-    current: 1,
-    pageSize: 5,
-    sortBy: '',
-    desc: false
-});
 let aboutInfo = ref<AboutInfo>({
-    id: '',
+    id: null,
     title: '',
     subtitle: '',
     enable: 'Y',
@@ -104,24 +102,21 @@ const columns = ref<ColumnItem[]>([
     },
     {
         field: 'enable',
-        header: '生效'
+        header: '生效',
+        sortable: true
     }
 ])
 
 const handleSearch = async () => {
-    await apiClient.post('/api/aboutInfo/paginateAboutInfo', {
-        title: title.value,
-        pageNum: tablePage.value.current,
-        pageSize: tablePage.value.pageSize,
-        sortBy: tablePage.value.sortBy,
-        desc: tablePage.value.desc
+    loading.value = true;
+    await apiClient.post('/api/aboutInfo/getAboutInfo', {
+        title: title.value
     }).then(res => {
-        data.value = res.data.list;
-        totalCount = res.data.total;
+        data.value = res.data;
     }).catch(err => {
         toast.add({ severity: 'error', summary: 'Error', detail: err.message, life: 3000 });
         console.error(err);
-    });
+    }).finally(() => loading.value = false);
 }
 const handleSelectedRow = (row: object) => {
     selectedRow.value = row;
@@ -135,7 +130,7 @@ const openCreateDialog = () => {
 const openModifyDialog = async () => {
     dialogType.value = 'M';
     if (!selectedRow.value) {
-        alert('請選擇一筆');
+        toast.add({ severity: 'info', summary: 'Info', detail: '請選擇一筆', life: 3000 });
     } else {
         const id = selectedRow.value.id;
         await apiClient.get('/api/aboutInfo/getAboutInfoDetail?id=' + id)
@@ -163,10 +158,9 @@ const onSelectFile = (event: any) => {
 
     return false;
 }
-const ok = () => {
+const ok = async () => {
     if (dialogType.value === 'C') {
-        console.log(aboutInfo.value);
-        apiClient.post('/api/aboutInfo/createAboutInfo', {
+        await apiClient.post('/api/aboutInfo/createAboutInfo', {
             title: aboutInfo.value.title,
             subtitle: aboutInfo.value.subtitle,
             content: aboutInfo.value.content,
@@ -181,30 +175,64 @@ const ok = () => {
             toast.add({ severity: 'error', summary: 'Error', detail: err.message, life: 3000 });
         })
     } else {
-
+        await apiClient.put('/api/aboutInfo/modifyAboutInfo', {
+            id: aboutInfo.value.id,
+            title: aboutInfo.value.title,
+            subtitle: aboutInfo.value.subtitle,
+            content: aboutInfo.value.content,
+            image: aboutInfo.value.image,
+            enable: aboutInfo.value.enable
+        }).then(res => {
+            toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
+            display.value = false;
+            handleSearch();
+        }).catch(err => {
+            console.log(err);
+            toast.add({ severity: 'error', summary: 'Error', detail: err.message, life: 3000 });
+        })
     }
 }
 const cancel = () => {
     display.value = false;
 }
-const remove = async () => {
+const removeConfirm = (event: any) => {
     if (!selectedRow.value) {
-        alert('請選擇一筆');
+        toast.add({ severity: 'info', summary: 'Info', detail: '請選擇一筆', life: 3000 });
     } else {
-        const id = selectedRow.value.id;
-        await apiClient.delete('/api/aboutInfo/removeAboutInfo/' + id)
-            .then(res => {
-                toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
-                handleSearch();
-            }).catch(err => {
-                console.error(err);
-                toast.add({ severity: 'error', summary: 'Error', detail: err.data, life: 3000 });
-            });
+        confirm.require({
+            target: event.currentTarget,
+            message: 'ID:' + selectedRow.value.id + ' 確定刪除?',
+            icon: 'pi pi-exclamation-triangle',
+            rejectProps: {
+                label: '取消',
+                severity: 'secondary',
+                outlined: true
+            },
+            acceptProps: {
+                label: '確定'
+            },
+            accept: () => {
+                remove();
+            },
+            reject: () => {
+            }
+        });
     }
+}
+const remove = async () => {
+    const id = selectedRow.value.id;
+    await apiClient.delete('/api/aboutInfo/removeAboutInfo/' + id)
+        .then(res => {
+            toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
+            handleSearch();
+        }).catch(err => {
+            console.error(err);
+            toast.add({ severity: 'error', summary: 'Error', detail: err.data, life: 3000 });
+        });
 }
 const resetDialog = () => {
     aboutInfo.value = {
-        id: '',
+        id: null,
         title: '',
         subtitle: '',
         enable: 'Y',
