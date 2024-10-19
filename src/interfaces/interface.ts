@@ -54,3 +54,15 @@ export interface AboutInfo {
     updateId: string,
     updateDate: string 
 }
+export interface ManagerInfo {
+    id: number | undefined | null,
+    title: string,
+    name: string,
+    image: string | undefined,
+    description1: string,
+    description2: string,
+    createId: string,
+    createDate: string,
+    updateId: string,
+    updateDate: string
+}

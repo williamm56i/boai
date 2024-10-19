@@ -18,7 +18,7 @@
             </BoaiTable>
         </Panel>
 
-        <Dialog v-model:visible="display" modal header="維護" :style="{ width: '50%' }"
+        <Dialog v-model:visible="display" modal :header="dialogType === 'C' ? '新增' : '維護'" :style="{ width: '50%' }"
             :breakpoints="{ '1200': '40%', '800px': '30%' }">
             <div for="title">主題</div>
             <InputText id="title" v-model="aboutInfo.title" />
