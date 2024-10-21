@@ -15,8 +15,16 @@ import ManagerSettingView from './admin/ManagerSettingView.vue';
     flex-direction: row;
     flex-wrap: wrap;
 }
-.admin-panel > * {
+
+.admin-panel>* {
     flex: 1 1 50%;
     max-width: 50%;
+}
+
+@media (max-width: 800px) {
+    .admin-panel>* {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }
 </style>

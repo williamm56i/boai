@@ -14,11 +14,12 @@ export interface CardItem {
     content?: string
 }
 export interface MgrItem {
-    position: string,
-    imageUrl: string,
+    id: number,
+    position: string | undefined,
+    image: string,
     title: string,
     name: string,
-    description: string,
+    description1: string,
     description2?: string
 }
 export interface DialogItem {

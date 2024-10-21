@@ -8,18 +8,18 @@
                     <InputText id="title" v-model="title" />
                 </FloatLabel>
                 <ConfirmPopup />
-                <Button icon="pi pi-search" style="margin-left: 5px;" @click="handleSearch" />
-                <Button icon="pi pi-plus" style="margin-left: 5px" @click="openCreateDialog" />
-                <Button icon="pi pi-pen-to-square" style="margin-left: 5px" @click="openModifyDialog" />
-                <Button icon="pi pi-trash" style="margin-left: 5px" @click="removeConfirm" />
+                <Button icon="pi pi-search" @click="handleSearch" />
+                <Button icon="pi pi-plus" @click="openCreateDialog" />
+                <Button icon="pi pi-pen-to-square" @click="openModifyDialog" />
+                <Button icon="pi pi-trash" @click="removeConfirm" />
             </div>
-            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading"
+            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading" :tableHeight="'222px'"
                 :selectionMode="'single'" @selected-row="handleSelectedRow">
             </BoaiTable>
         </Panel>
 
         <Dialog v-model:visible="display" modal :header="dialogType === 'C' ? '新增' : '維護'" :style="{ width: '50%' }"
-            :breakpoints="{ '1200': '40%', '800px': '30%' }">
+            :breakpoints="{ '1200px': '70%', '800px': '100%' }">
             <div for="title">主題</div>
             <InputText id="title" v-model="aboutInfo.title" />
             <div for="subtitle">標語</div>
@@ -282,7 +282,6 @@ td {
 }
 
 .p-button {
-    margin-left: 5px;
-    margin-right: 5px
+    margin-left: 10px;
 }
 </style>

@@ -1,10 +1,14 @@
 <template>
     <Card>
         <template #content>
-            <DataTable paginator :size="size" :rows="pageSize" :totalRecords="totalCount" :rowsPerPageOptions="pageNumList" removableSort :value="data"
-                :selectionMode="selectionMode" v-model:selection="selectionRow" :loading="loading" @click="handleClick">
+            <DataTable paginator :size="size" :rows="pageSize" :totalRecords="totalCount"
+                :rowsPerPageOptions="pageNumList" removableSort :value="data" scrollable :scrollHeight="tableHeight"
+                :selectionMode="selectionMode" v-model:selection="selectionRow"
+                :loading="loading" @click="handleClick">
                 <template #empty> No Data. </template>
-                <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header" :sortable="col.sortable"></Column>
+                <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header"
+                    :sortable="col.sortable">
+                </Column>
             </DataTable>
         </template>
     </Card>
@@ -19,13 +23,14 @@ defineProps<{
     totalCount?: number;
     loading: boolean;
     selectionMode?: any | undefined;
+    tableHeight?: string
 }>();
 const pageSize = ref(5);
 const pageNumList = ref([5, 10, 15, 20, 50, 100]);
 let selectionRow = ref({});
 
 const emit = defineEmits<{
-  (e: 'selectedRow', value: object): void;
+    (e: 'selectedRow', value: object): void;
 }>();
 
 const handleClick = () => {
@@ -33,5 +38,7 @@ const handleClick = () => {
 }
 </script>
 <style scoped>
-
+.p-datatable-table-container {
+    min-height: 222px;
+}
 </style>

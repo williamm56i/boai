@@ -7,18 +7,18 @@
                     <InputText id="name" v-model="name" />
                 </FloatLabel>
                 <ConfirmPopup />
-                <Button icon="pi pi-search" style="margin-left: 5px;" @click="handleSearch" />
-                <Button icon="pi pi-plus" style="margin-left: 5px" @click="openCreateDialog" />
-                <Button icon="pi pi-pen-to-square" style="margin-left: 5px" @click="openModifyDialog" />
-                <Button icon="pi pi-trash" style="margin-left: 5px" @click="removeConfirm" />
+                <Button icon="pi pi-search" @click="handleSearch" />
+                <Button icon="pi pi-plus" @click="openCreateDialog" />
+                <Button icon="pi pi-pen-to-square" @click="openModifyDialog" />
+                <Button icon="pi pi-trash" @click="removeConfirm" />
             </div>
-            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading"
+            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading" :tableHeight="'222px'"
                 :selectionMode="'single'" @selected-row="handleSelectedRow">
             </BoaiTable>
         </Panel>
 
         <Dialog v-model:visible="display" modal :header="dialogType === 'C' ? '新增' : '維護'" :style="{ width: '50%' }"
-            :breakpoints="{ '1200': '40%', '800px': '30%' }">
+            :breakpoints="{ '1200px': '70%', '800px': '100%' }">
             <div for="title">職稱</div>
             <InputText id="title" v-model="managerInfo.title" />
             <div for="subtitle">姓名</div>
@@ -28,7 +28,7 @@
             <div for="description2">經歷2</div>
             <InputText id="description2" v-model="managerInfo.description2" />
             <div for="image">照片</div>
-            <div class="about-photo">
+            <div class="manager-photo">
                 <img :src="managerInfo.image" width="300px" height="auto" />
             </div>
             <FileUpload ref="fileupload" mode="basic" name="aboutPhoto[]" accept="image/*" :maxFileSize="1000000"
@@ -88,7 +88,7 @@ const columns = ref<ColumnItem[]>([
     },
     {
         field: 'title',
-        header: '主題'
+        header: '職稱'
     },
     {
         field: 'name',
@@ -97,7 +97,7 @@ const columns = ref<ColumnItem[]>([
 ])
 
 const handleSearch = async () => {
-    await apiClient.post('/api/managerInfo/paginateManagerInfo', {
+    await apiClient.post('/api/managerInfo/getManagerInfo', {
         name: name.value
     }).then(res => {
         data.value = res.data;
@@ -222,7 +222,7 @@ const resetDialog = () => {
         id: null,
         title: '',
         name: '',
-        description1: 'Y',
+        description1: '',
         description2: '',
         image: '',
         createId: '',
@@ -238,5 +238,37 @@ onMounted(() => {
 <style scoped>
 .p-panel {
     width: 100%;
+}
+
+.manager-photo {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.p-select {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+td {
+    width: 50%;
+}
+
+.action-tool {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px
+}
+
+.p-button {
+    margin-left: 10px;
 }
 </style>

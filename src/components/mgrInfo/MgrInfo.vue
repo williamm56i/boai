@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 defineProps<{
-    position: string,
+    position: string | undefined,
     imageUrl: string,
     title: string,
     name: string,
