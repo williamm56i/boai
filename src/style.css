@@ -82,6 +82,9 @@ button:focus-visible {
 .p-datatable-thead > tr > th {
   background-color: #f7f7f7f7;
 }
+.p-datatable-table-container {
+  min-height: 222px;
+}
 /* #app {
   max-width: 1280px;
   margin: 0 auto;
