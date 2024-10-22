@@ -32,6 +32,7 @@ import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import ConfirmPopup from 'primevue/confirmpopup';
 import ConfirmationService from 'primevue/confirmationservice';
+import DatePicker from 'primevue/datepicker';
 
 const BoaiPreset = definePreset(Aura, Aura, {
     semantic: {
@@ -84,5 +85,6 @@ createApp(App)
     .component('Textarea', Textarea)
     .component('Toast', Toast)
     .component('ConfirmPopup', ConfirmPopup)
+    .component('DatePicker', DatePicker)
     .use(router)
     .mount('#app');

@@ -7,7 +7,7 @@ export interface MenuItem {
     items?: MenuItem[];
 };
 export interface CardItem {
-    id: string,
+    id: number,
     title: string,
     image: string,
     subtitle: string,
@@ -35,6 +35,7 @@ export interface JwtPayload {
 export interface ColumnItem {
     field: string,
     header: string,
+    width?: string,
     sortable?: boolean
 };
 export interface TablePage {
@@ -66,4 +67,18 @@ export interface ManagerInfo {
     createDate: string,
     updateId: string,
     updateDate: string
+}
+export interface ActivityInfo {
+    id: number | undefined | null,
+    title: string,
+    subtitle: string,
+    applyStartDate: Date | null,
+    applyEndDate: Date | null,
+    content: string,
+    image: string | undefined,
+    activityGroup: string,
+    createId: string,
+    createDate: string,
+    updateId: string,
+    updateDate: string 
 }

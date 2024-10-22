@@ -1,7 +1,7 @@
 <template>
     <div>
         <Toast />
-        <Panel header="關於我們 - 管理">
+        <Panel header="活動資訊 - 管理">
             <div style="display: flex; flex-direction: row;">
                 <FloatLabel variant="on">
                     <label for="title">主題</label>
@@ -21,28 +21,37 @@
         <Dialog v-model:visible="display" modal :header="dialogType === 'C' ? '新增' : '維護'" :style="{ width: '50%' }"
             :breakpoints="{ '1200px': '70%', '800px': '100%' }">
             <div for="title">主題</div>
-            <InputText id="title" v-model="aboutInfo.title" />
-            <div for="subtitle">標語</div>
-            <InputText id="subtitle" v-model="aboutInfo.subtitle" />
+            <InputText id="title" v-model="activityInfo.title" />
+            <div for="subtitle">活動資訊</div>
+            <InputText id="subtitle" v-model="activityInfo.subtitle" />
+            <div for="activityGroup">活動分類</div>
+            <InputText id="activityGroup" v-model="activityInfo.activityGroup" maxlength="4"/>
             <div for="content">內文</div>
-            <Textarea id="content" v-model="aboutInfo.content" rows="3" style="width: 100%;" />
-            <div for="enable">生效</div>
-            <Select id="enable" v-model="aboutInfo.enable" :options="enableOptions" optionLabel="label"
-                optionValue="value" />
+            <Textarea id="content" v-model="activityInfo.content" rows="3" style="width: 100%;" />
+            <table>
+                <tr>
+                    <td><div for="applyStartDate">報名起日</div></td>
+                    <td><div for="applyEndDate">報名迄日</div></td>
+                </tr>
+                <tr>
+                    <td><DatePicker id="datepicker-24h" placeholder="yyyy/MM/dd HH:mm" v-model="activityInfo.applyStartDate" showTime hourFormat="24" date-format="yy/mm/dd" showIcon :showOnFocus="false" fluid /></td>
+                    <td><DatePicker id="datepicker-24h" placeholder="yyyy/MM/dd HH:mm" v-model="activityInfo.applyEndDate" showTime hourFormat="24" date-format="yy/mm/dd" showIcon :showOnFocus="false" fluid /></td>
+                </tr>
+            </table>
             <div for="image">圖片</div>
             <div class="about-photo">
-                <img :src="aboutInfo.image" width="300px" height="auto" />
+                <img :src="activityInfo.image" width="300px" height="auto" />
             </div>
             <FileUpload ref="fileupload" mode="basic" name="aboutPhoto[]" accept="image/*" :maxFileSize="1000000"
                 :customUpload="true" chooseLabel="選擇圖片" @select="onSelectFile" />
-            <table>
+            <table class="edit-info">
                 <tr>
-                    <td>建立人員：{{ aboutInfo.createId }}</td>
-                    <td>建立日期：{{ aboutInfo.createDate }}</td>
+                    <td>建立人員：{{ activityInfo.createId }}</td>
+                    <td>建立日期：{{ activityInfo.createDate }}</td>
                 </tr>
                 <tr>
-                    <td>異動人員：{{ aboutInfo.updateId }}</td>
-                    <td>異動日期：{{ aboutInfo.updateDate }}</td>
+                    <td>異動人員：{{ activityInfo.updateId }}</td>
+                    <td>異動日期：{{ activityInfo.updateDate }}</td>
                 </tr>
             </table>
             <div class="action-tool">
@@ -56,9 +65,10 @@
 import { onMounted, ref } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
-import { AboutInfo, CardItem, ColumnItem } from '../../interfaces/interface';
+import { ActivityInfo, CardItem, ColumnItem } from '../../interfaces/interface';
 import apiClient from '../../request/request';
 import BoaiTable from '../../components/table/BoaiTable.vue';
+import dayjs from 'dayjs';
 
 const toast = useToast();
 const confirm = useConfirm();
@@ -67,20 +77,18 @@ const loading = ref(false);
 const title = ref('');
 const display = ref(false);
 const dialogType = ref('');
-const enableOptions = ref([
-    { label: 'Y', value: 'Y' },
-    { label: 'N', value: 'N' }
-]);
 const data = ref<CardItem[]>([]);
 const selectedRow = ref<any>();
 const totalCount = ref<number>(0);
-const aboutInfo = ref<AboutInfo>({
+const activityInfo = ref<ActivityInfo>({
     id: null,
     title: '',
     subtitle: '',
-    enable: 'Y',
+    applyStartDate: null,
+    applyEndDate: null,
     content: '',
     image: '',
+    activityGroup: '',
     createId: '',
     createDate: '',
     updateId: '',
@@ -98,19 +106,13 @@ const columns = ref<ColumnItem[]>([
     },
     {
         field: 'subtitle',
-        header: '標語'
-    },
-    {
-        field: 'enable',
-        header: '生效',
-        width: '80px',
-        sortable: true
+        header: '活動資訊'
     }
 ])
 
 const handleSearch = async () => {
     loading.value = true;
-    await apiClient.post('/api/aboutInfo/getAboutInfo', {
+    await apiClient.post('/api/activityInfo/getActivityInfo', {
         title: title.value
     }).then(res => {
         data.value = res.data;
@@ -134,9 +136,11 @@ const openModifyDialog = async () => {
         toast.add({ severity: 'info', summary: 'Info', detail: '請選擇一筆', life: 3000 });
     } else {
         const id = selectedRow.value.id;
-        await apiClient.get('/api/aboutInfo/getAboutInfoDetail/' + id)
+        await apiClient.get('/api/activityInfo/getActivityInfoDetail/' + id)
             .then(res => {
-                aboutInfo.value = res.data;
+                res.data.applyStartDate = res.data.applyStartDate ? dayjs(res.data.applyStartDate, 'YYYY/MM/DD HH:mm:ss').toDate() : null;
+                res.data.applyEndDate = res.data.applyEndDate ? dayjs(res.data.applyEndDate, 'YYYY/MM/DD HH:mm:ss').toDate() : null;
+                activityInfo.value = res.data;
                 display.value = true;
             }).catch(err => {
                 console.error(err);
@@ -153,7 +157,7 @@ const onSelectFile = (event: any) => {
     const reader = new FileReader();
     reader.onload = () => {
         const base64String = reader.result;
-        aboutInfo.value.image = base64String?.toString()
+        activityInfo.value.image = base64String?.toString()
     };
     reader.readAsDataURL(file);
 
@@ -161,12 +165,13 @@ const onSelectFile = (event: any) => {
 }
 const ok = async () => {
     if (dialogType.value === 'C') {
-        await apiClient.post('/api/aboutInfo/createAboutInfo', {
-            title: aboutInfo.value.title,
-            subtitle: aboutInfo.value.subtitle,
-            content: aboutInfo.value.content,
-            image: aboutInfo.value.image,
-            enable: aboutInfo.value.enable
+        await apiClient.post('/api/activityInfo/createActivityInfo', {
+            title: activityInfo.value.title,
+            subtitle: activityInfo.value.subtitle,
+            content: activityInfo.value.content,
+            image: activityInfo.value.image,
+            applyStartDate: activityInfo.value.applyStartDate,
+            applyEndDate: activityInfo.value.applyEndDate
         }).then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             display.value = false;
@@ -176,13 +181,14 @@ const ok = async () => {
             toast.add({ severity: 'error', summary: 'Error', detail: err.message, life: 3000 });
         })
     } else {
-        await apiClient.put('/api/aboutInfo/modifyAboutInfo', {
-            id: aboutInfo.value.id,
-            title: aboutInfo.value.title,
-            subtitle: aboutInfo.value.subtitle,
-            content: aboutInfo.value.content,
-            image: aboutInfo.value.image,
-            enable: aboutInfo.value.enable
+        await apiClient.put('/api/activityInfo/modifyActivityInfo', {
+            id: activityInfo.value.id,
+            title: activityInfo.value.title,
+            subtitle: activityInfo.value.subtitle,
+            content: activityInfo.value.content,
+            image: activityInfo.value.image,
+            applyStartDate: activityInfo.value.applyStartDate,
+            applyEndDate: activityInfo.value.applyEndDate
         }).then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             display.value = false;
@@ -222,7 +228,7 @@ const removeConfirm = (event: any) => {
 }
 const remove = async () => {
     const id = selectedRow.value.id;
-    await apiClient.delete('/api/aboutInfo/removeAboutInfo/' + id)
+    await apiClient.delete('/api/activityInfo/removeActivityInfo/' + id)
         .then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             handleSearch();
@@ -232,13 +238,15 @@ const remove = async () => {
         });
 }
 const resetDialog = () => {
-    aboutInfo.value = {
+    activityInfo.value = {
         id: null,
         title: '',
         subtitle: '',
-        enable: 'Y',
         content: '',
+        applyStartDate: null,
+        applyEndDate: null,
         image: '',
+        activityGroup: '',
         createId: '',
         createDate: '',
         updateId: '',
@@ -266,6 +274,12 @@ onMounted(() => {
 }
 
 table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.edit-info {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;

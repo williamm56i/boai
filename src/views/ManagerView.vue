@@ -83,7 +83,6 @@ const getManagerInfo = async () => {
         }).catch(err => console.error(err))
 }
 const updateScreenSize = () => {
-    console.log('screen ' + new Date());
     const width = window.innerWidth;
     if (width < 800) {
         managers.value.forEach( async (mgr, index) => {
@@ -119,7 +118,6 @@ const updateScreenSize = () => {
             mgr.image = await getImage(mgr.id);
         });
     }
-    console.log('screen done ' + new Date());
 }
 const getImage = async (id: number): Promise<string> => {
     return apiClient.get('/api/managerInfo/getImage/' + id)

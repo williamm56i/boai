@@ -6,7 +6,7 @@
                 :selectionMode="selectionMode" v-model:selection="selectionRow"
                 :loading="loading" @click="handleClick">
                 <template #empty> No Data. </template>
-                <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header"
+                <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header" :style="{width: col.width}"
                     :sortable="col.sortable">
                 </Column>
             </DataTable>

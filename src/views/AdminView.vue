@@ -2,10 +2,12 @@
     <div class="admin-panel">
         <AboutSettingView />
         <ManagerSettingView />
+        <ActivitySettingView />
     </div>
 </template>
 <script setup lang="ts">
 import AboutSettingView from './admin/AboutSettingView.vue';
+import ActivitySettingView from './admin/ActivitySettingView.vue';
 import ManagerSettingView from './admin/ManagerSettingView.vue';
 
 </script>

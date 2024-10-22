@@ -61,14 +61,14 @@ import BoaiTable from '../../components/table/BoaiTable.vue';
 const toast = useToast();
 const confirm = useConfirm();
 const tableSize = ref('small');
-let loading = ref(false);
-let name = ref('');
-let display = ref(false);
-let dialogType = ref('');
-let data = ref<MgrItem[]>([]);
-let selectedRow = ref<any>();
-let totalCount = ref<number>(0);
-let managerInfo = ref<ManagerInfo>({
+const loading = ref(false);
+const name = ref('');
+const display = ref(false);
+const dialogType = ref('');
+const data = ref<MgrItem[]>([]);
+const selectedRow = ref<any>();
+const totalCount = ref<number>(0);
+const managerInfo = ref<ManagerInfo>({
     id: null,
     title: '',
     name: '',
@@ -120,7 +120,7 @@ const openModifyDialog = async () => {
         toast.add({ severity: 'info', summary: 'Info', detail: '請選擇一筆', life: 3000 });
     } else {
         const id = selectedRow.value.id;
-        await apiClient.get('/api/managerInfo/getManagerInfoDetail?id=' + id)
+        await apiClient.get('/api/managerInfo/getManagerInfoDetail/' + id)
             .then(res => {
                 managerInfo.value = res.data;
                 display.value = true;

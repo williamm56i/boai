@@ -36,7 +36,7 @@
 import { ref } from 'vue';
 defineProps<{
     position: string | undefined,
-    imageUrl: string,
+    imageUrl: string | undefined,
     title: string,
     name: string,
     description: string,

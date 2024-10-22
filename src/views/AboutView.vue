@@ -5,15 +5,18 @@
       <Skeleton v-show="!isImageLoaded" width="100%" height="30rem"></Skeleton>
     </section>
     <section class="second">
-      <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="5000" :responsiveOptions="responsiveOptions">
+      <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="5000"
+        :responsiveOptions="responsiveOptions">
         <template #item="slotProps">
-          <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :image-url="slotProps.data.image" @click="handleCardClick(slotProps.data)"></BoaiCard>
+          <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :image-url="slotProps.data.image"
+            @click="handleCardClick(slotProps.data)"></BoaiCard>
         </template>
       </Carousel>
     </section>
   </div>
-  <Dialog v-model:visible="dialogVisible" modal :header="dialogInfo.header" :style="{width: '50%'}" :breakpoints="{ '1200px': '60%', '800px': '80%'}">
-    <img :src="dialogInfo.imageUrl" width="100%"/>
+  <Dialog v-model:visible="dialogVisible" modal :header="dialogInfo.header" :style="{ width: '50%' }"
+    :breakpoints="{ '1200px': '60%', '800px': '80%' }">
+    <img :src="dialogInfo.imageUrl" width="100%" />
     <p>{{ dialogInfo.content }}</p>
   </Dialog>
 </template>
@@ -26,28 +29,28 @@ import apiClient from '../request/request';
 const dialogVisible = ref(false);
 const products = ref<CardItem[]>([
   {
-    id: '1',
+    id: 1,
     title: '我支持．台灣無毒 ',
     image: '/boardgame.jpg',
     subtitle: '讓台灣成為無毒家園，反毒教育從小做起',
     content: '讓台灣成為無毒家園，反毒教育從小做起讓台灣成為無毒家園，反毒教育從小做起front'
   },
   {
-    id: '2',
+    id: 2,
     title: '運算思維聯盟',
     image: '/little_scientist1.jpg',
     subtitle: '建立孩子解決問題的能力，從運算思維開始',
     content: '建立孩子解決問題的能力，從運算思維開始建立孩子解決問題的能力，從運算思維開始front'
   },
   {
-    id: '3',
+    id: 3,
     title: '就是市集 All Hands',
     image: '/book.jpg',
     subtitle: '由大量的閱讀，建立良好的思維',
     content: '由大量的閱讀，建立良好的思由大量的閱讀，建立良好的思front'
   },
   {
-    id: '4',
+    id: 4,
     title: '青銀共煮',
     image: '/cook.jpg',
     subtitle: '惜食，福利，跨世代共煮交流。',
@@ -68,7 +71,7 @@ const responsiveOptions = ref([
 ]);
 const isImageLoaded = ref(false);
 const handleImageLoading = () => {
-    isImageLoaded.value = true;
+  isImageLoaded.value = true;
 }
 let dialogInfo = ref<DialogItem>({
   header: '',
@@ -82,14 +85,26 @@ const handleCardClick = (data: CardItem) => {
   dialogVisible.value = true;
 }
 const getAboutInfo = async () => {
-  apiClient.get('/api/aboutInfo/getAll').then(res => {
+  await apiClient.get('/api/aboutInfo/getAll').then(res => {
     products.value = res.data;
+    fetchAboutInfoImage();
   }).catch(err => {
     console.error(err);
   });
 }
-onMounted(() => {
-  getAboutInfo();
+const fetchAboutInfoImage = () => {
+  products.value.forEach(async product => {
+    product.image = await getImage(product.id)
+  })
+}
+const getImage = async (id: number): Promise<string> => {
+  return apiClient.get('/api/aboutInfo/getImage/' + id)
+    .then(res => {
+      return res.data;
+    }).catch(err => console.log(err));
+}
+onMounted(async () => {
+  await getAboutInfo();
 })
 </script>
 
@@ -115,5 +130,4 @@ onMounted(() => {
 .second {
   background: linear-gradient(to left, rgb(238, 226, 171) 40%, rgba(253, 208, 0, 0) 70%);
 }
-
 </style>
