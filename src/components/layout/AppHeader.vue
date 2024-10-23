@@ -66,7 +66,6 @@ onMounted( () => {
     height: 100px;
     background-color: #ffffff;
 }
-
 .content {
     position: absolute;
     left: 8%;

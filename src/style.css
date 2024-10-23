@@ -56,7 +56,9 @@ button:focus-visible {
 .card {
   padding: 2em;
 }
-
+.p-tabmenu {
+  background-color: aqua;
+}
 .p-card {
   margin: 5px 5px 5px 5px;
 }

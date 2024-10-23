@@ -171,7 +171,8 @@ const ok = async () => {
             content: activityInfo.value.content,
             image: activityInfo.value.image,
             applyStartDate: activityInfo.value.applyStartDate,
-            applyEndDate: activityInfo.value.applyEndDate
+            applyEndDate: activityInfo.value.applyEndDate,
+            activityGroup: activityInfo.value.activityGroup
         }).then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             display.value = false;
@@ -188,7 +189,8 @@ const ok = async () => {
             content: activityInfo.value.content,
             image: activityInfo.value.image,
             applyStartDate: activityInfo.value.applyStartDate,
-            applyEndDate: activityInfo.value.applyEndDate
+            applyEndDate: activityInfo.value.applyEndDate,
+            activityGroup: activityInfo.value.activityGroup
         }).then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             display.value = false;

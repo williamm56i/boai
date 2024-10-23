@@ -53,4 +53,9 @@ onMounted(async () => {
 .p-panel {
     width: 60%;
 }
+@media (max-width: 800px) {
+    .p-panel {
+        width: 95%;
+    }
+}
 </style>
