@@ -82,3 +82,12 @@ export interface ActivityInfo {
     updateId: string,
     updateDate: string 
 }
+export interface ApplyForm {
+    applyName: string,
+    applySex: string | null | undefined,
+    applyPhone: string,
+    applyEmail: string | null | undefined,
+    applyResidence: string | null | undefined,
+    infoFrom: string,
+    introducerName: string | null | undefined
+}

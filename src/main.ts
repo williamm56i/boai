@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import { VueReCaptcha } from 'vue-recaptcha-v3';
 import './style.css';
 import App from './App.vue';
 import router from './router';
@@ -33,6 +34,7 @@ import ToastService from 'primevue/toastservice';
 import ConfirmPopup from 'primevue/confirmpopup';
 import ConfirmationService from 'primevue/confirmationservice';
 import DatePicker from 'primevue/datepicker';
+import RadioButton from 'primevue/radiobutton';
 
 const BoaiPreset = definePreset(Aura, Aura, {
     semantic: {
@@ -60,6 +62,12 @@ createApp(App)
     })
     .use(ToastService)
     .use(ConfirmationService)
+    .use(VueReCaptcha, {
+        siteKey: '6Ld6omkqAAAAALiIBYRtU9_dvqywGkK2bTxghQCM',
+        loaderOptions: {
+            useRecaptchaNet: true,
+        },
+    })
     .component('PanelMenu', PanelMenu)
     .component('Breadcrumb', Breadcrumb)
     .component('Avatar', Avatar)
@@ -86,5 +94,6 @@ createApp(App)
     .component('Toast', Toast)
     .component('ConfirmPopup', ConfirmPopup)
     .component('DatePicker', DatePicker)
+    .component('RadioButton', RadioButton)
     .use(router)
     .mount('#app');
