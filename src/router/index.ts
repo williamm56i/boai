@@ -52,7 +52,7 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
   if (to.path !== '/login') {
     if (!localStorage.getItem('jwt')) {
       await apiClient.get('/api/system/generateToken?account=GUEST').then(res => {
