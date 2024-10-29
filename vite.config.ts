@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://172.17.0.4:8080/boai/', // 你的後端 API 服務地址
+        target: 'http://localhost:8080/boai/', // 你的後端 API 服務地址
         changeOrigin: true, // 避免後端 API 拒絕因為不同來源的請求
       }
     }

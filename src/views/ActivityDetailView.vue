@@ -64,13 +64,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useReCaptcha } from 'vue-recaptcha-v3';
+// import { useReCaptcha } from 'vue-recaptcha-v3';
 import { useToast } from "primevue/usetoast";
 import { ApplyForm } from '../interfaces/interface.ts';
 import apiClient from '../request/request';
 import dayjs from 'dayjs';
 
-const { executeRecaptcha } = useReCaptcha()!;
+// const { executeRecaptcha } = useReCaptcha()!;
 const toast = useToast();
 const router = useRoute();
 const display = ref(false);
@@ -111,8 +111,9 @@ const openSearchForm = () => {
     display.value = true;
 }
 const ok = async () => {
-    const token = await executeRecaptcha("submit_form");
-    const flag = await verifyRecaptcha(token);
+    // const token = await executeRecaptcha("submit_form");
+    // const flag = await verifyRecaptcha(token);
+    const flag = true;
     if (flag) {
         await apiClient.post('/api/activityInfo/apply', {
             activityId: id,

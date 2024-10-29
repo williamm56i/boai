@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { VueReCaptcha } from 'vue-recaptcha-v3';
+// import { VueReCaptcha } from 'vue-recaptcha-v3';
 import './style.css';
 import App from './App.vue';
 import router from './router';
@@ -62,12 +62,12 @@ createApp(App)
     })
     .use(ToastService)
     .use(ConfirmationService)
-    .use(VueReCaptcha, {
-        siteKey: '6Ld6omkqAAAAALiIBYRtU9_dvqywGkK2bTxghQCM',
-        loaderOptions: {
-            useRecaptchaNet: true,
-        },
-    })
+    // .use(VueReCaptcha, {
+    //     siteKey: '6Ld6omkqAAAAALiIBYRtU9_dvqywGkK2bTxghQCM',
+    //     loaderOptions: {
+    //         useRecaptchaNet: true,
+    //     },
+    // })
     .component('PanelMenu', PanelMenu)
     .component('Breadcrumb', Breadcrumb)
     .component('Avatar', Avatar)
