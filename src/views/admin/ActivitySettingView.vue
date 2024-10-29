@@ -27,7 +27,7 @@
             <div for="activityGroup">活動分類</div>
             <InputText id="activityGroup" v-model="activityInfo.activityGroup" maxlength="4"/>
             <div for="content">內文</div>
-            <Textarea id="content" v-model="activityInfo.content" rows="3" style="width: 100%;" />
+            <BoaiEditor v-model="activityInfo.content" editorStyle="height: 150px" />
             <table>
                 <tr>
                     <td><div for="applyStartDate">報名起日</div></td>
@@ -69,6 +69,7 @@ import { ActivityInfo, CardItem, ColumnItem } from '../../interfaces/interface';
 import apiClient from '../../request/request';
 import BoaiTable from '../../components/table/BoaiTable.vue';
 import dayjs from 'dayjs';
+import BoaiEditor from '../../components/editor/BoaiEditor.vue';
 
 const toast = useToast();
 const confirm = useConfirm();
@@ -123,7 +124,6 @@ const handleSearch = async () => {
 }
 const handleSelectedRow = (row: object) => {
     selectedRow.value = row;
-    console.log(selectedRow.value);
 }
 const openCreateDialog = () => {
     resetDialog();
@@ -141,6 +141,7 @@ const openModifyDialog = async () => {
                 res.data.applyStartDate = res.data.applyStartDate ? dayjs(res.data.applyStartDate, 'YYYY/MM/DD HH:mm:ss').toDate() : null;
                 res.data.applyEndDate = res.data.applyEndDate ? dayjs(res.data.applyEndDate, 'YYYY/MM/DD HH:mm:ss').toDate() : null;
                 activityInfo.value = res.data;
+                activityInfo.value.content = res.data.content;
                 display.value = true;
             }).catch(err => {
                 console.error(err);
