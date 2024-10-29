@@ -11,70 +11,7 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import MgrInfo from '../components/mgrInfo/MgrInfo.vue';
 import { MgrItem } from '../interfaces/interface';
 import apiClient from '../request/request';
-const managers = ref<MgrItem[]>([
-    {
-        id: 1,
-        position: 'left',
-        image: '/man_chang.jpg',
-        title: '榮譽理事長',
-        name: '張誠',
-        description1: '伊利諾大學香檳校區電腦科學 博士',
-        description2: '前雄三飛彈專案總工程師'
-    },
-    {
-        id: 2,
-        position: 'left',
-        image: '/chairman.jpg',
-        title: '理事長',
-        name: '陳郁婷',
-        description1: '台灣大學資訊管理研究所 碩士'
-    },
-    {
-        id: 3,
-        position: 'left',
-        image: '/man_andy.jpg',
-        title: '財務長',
-        name: '莊淵智',
-        description1: '中正理工學院資訊工程研究所 碩士',
-        description2: '中山科學研究院 中校'
-    },
-    {
-        id: 4,
-        position: 'left',
-        image: '/man_cathy.jpg',
-        title: '執行秘書',
-        name: '李凱西',
-        description1: '個人資訊第一行',
-        description2: '個人資訊第二行'
-    },
-    {
-        id: 5,
-        position: 'left',
-        image: '/man_youn.jpg',
-        title: '公關長',
-        name: '李永昌',
-        description1: '個人資訊第一行',
-        description2: '個人資訊第二行'
-    },
-    {
-        id: 6,
-        position: 'left',
-        image: '/man_fren.jpg',
-        title: '設計總監',
-        name: 'Fren Fan',
-        description1: '個人資訊第一行',
-        description2: '個人資訊第二行'
-    },
-    {
-        id: 7,
-        position: 'left',
-        image: '/audit.jpg',
-        title: '監察人',
-        name: '陳妍希',
-        description1: '昌福托嬰中心 陶釉班',
-        description2: '昌福托嬰中心 琉璃班'
-    }
-]);
+const managers = ref<MgrItem[]>([]);
 const getManagerInfo = async () => {
     await apiClient.get('/api/managerInfo/getAll')
         .then(res => {
