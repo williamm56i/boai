@@ -26,6 +26,8 @@
             <InputText id="subtitle" v-model="activityInfo.subtitle" />
             <div for="activityGroup">活動分類</div>
             <InputText id="activityGroup" v-model="activityInfo.activityGroup" maxlength="4"/>
+            <div for="activityDate">活動日</div>
+            <td><DatePicker id="datepicker" placeholder="yyyy/MM/dd" v-model="activityInfo.activityDate" date-format="yy/mm/dd" showIcon :showOnFocus="false" fluid /></td>
             <div for="content">內文</div>
             <BoaiEditor v-model="activityInfo.content" editorStyle="height: 150px" />
             <table>
@@ -90,6 +92,7 @@ const activityInfo = ref<ActivityInfo>({
     content: '',
     image: '',
     activityGroup: '',
+    activityDate: null,
     createId: '',
     createDate: '',
     updateId: '',
@@ -140,6 +143,7 @@ const openModifyDialog = async () => {
             .then(res => {
                 res.data.applyStartDate = res.data.applyStartDate ? dayjs(res.data.applyStartDate, 'YYYY/MM/DD HH:mm:ss').toDate() : null;
                 res.data.applyEndDate = res.data.applyEndDate ? dayjs(res.data.applyEndDate, 'YYYY/MM/DD HH:mm:ss').toDate() : null;
+                res.data.activityDate = res.data.activityDate ? dayjs(res.data.activityDate, 'YYYY/MM/DD').toDate() : null;
                 activityInfo.value = res.data;
                 activityInfo.value.content = res.data.content;
                 display.value = true;
@@ -173,7 +177,8 @@ const ok = async () => {
             image: activityInfo.value.image,
             applyStartDate: activityInfo.value.applyStartDate,
             applyEndDate: activityInfo.value.applyEndDate,
-            activityGroup: activityInfo.value.activityGroup
+            activityGroup: activityInfo.value.activityGroup,
+            activityDate: activityInfo.value.activityDate
         }).then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             display.value = false;
@@ -191,7 +196,8 @@ const ok = async () => {
             image: activityInfo.value.image,
             applyStartDate: activityInfo.value.applyStartDate,
             applyEndDate: activityInfo.value.applyEndDate,
-            activityGroup: activityInfo.value.activityGroup
+            activityGroup: activityInfo.value.activityGroup,
+            activityDate: activityInfo.value.activityDate
         }).then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             display.value = false;
@@ -250,6 +256,7 @@ const resetDialog = () => {
         applyEndDate: null,
         image: '',
         activityGroup: '',
+        activityDate: null,
         createId: '',
         createDate: '',
         updateId: '',

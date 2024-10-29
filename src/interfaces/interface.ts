@@ -77,6 +77,7 @@ export interface ActivityInfo {
     content: string,
     image: string | undefined,
     activityGroup: string,
+    activityDate: Date | null,
     createId: string,
     createDate: string,
     updateId: string,
