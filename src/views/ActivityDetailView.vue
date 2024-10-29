@@ -137,15 +137,15 @@ const ok = async () => {
 const cancel = () => {
     display.value = false;
 }
-const verifyRecaptcha = async (token: string) => {
-    return await apiClient.post('/api/system/verifyRecaptcha?token=' + token, null)
-        .then(res => {
-            return res.data === 'SUCCESS' ? true : false;
-        }).catch(err => {
-            console.error(err);
-            return false;
-        });
-}
+// const verifyRecaptcha = async (token: string) => {
+//     return await apiClient.post('/api/system/verifyRecaptcha?token=' + token, null)
+//         .then(res => {
+//             return res.data === 'SUCCESS' ? true : false;
+//         }).catch(err => {
+//             console.error(err);
+//             return false;
+//         });
+// }
 const resetDialog = () => {
     applyForm.value = {
         applyName: '',
