@@ -84,7 +84,9 @@ export interface ActivityInfo {
     updateDate: string 
 }
 export interface ApplyForm {
+    id?: string,
     applyName: string,
+    applyDate?: Date,
     applySex: string | null | undefined,
     applyPhone: string,
     applyEmail: string | null | undefined,

@@ -14,8 +14,8 @@
                 <Button v-tooltip.top="'報名清單'" icon="pi pi-list" @click="openApplyListDialog" />
                 <Button v-tooltip.top="'刪除'" icon="pi pi-trash" @click="removeConfirm" />
             </div>
-            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading" :tableHeight="'222px'"
-                :selectionMode="'single'" @selected-row="handleSelectedRow">
+            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading"
+                :tableHeight="'222px'" :selectionMode="'single'" @selected-row="handleSelectedRow">
             </BoaiTable>
         </Panel>
 
@@ -26,19 +26,34 @@
             <div for="subtitle">活動資訊</div>
             <InputText id="subtitle" v-model="activityInfo.subtitle" />
             <div for="activityGroup">活動分類</div>
-            <InputText id="activityGroup" v-model="activityInfo.activityGroup" maxlength="4"/>
+            <InputText id="activityGroup" v-model="activityInfo.activityGroup" maxlength="4" />
             <div for="activityDate">活動日</div>
-            <td><DatePicker id="datepicker" placeholder="yyyy/MM/dd" v-model="activityInfo.activityDate" date-format="yy/mm/dd" showIcon :showOnFocus="false" fluid /></td>
+            <td>
+                <DatePicker id="datepicker" placeholder="yyyy/MM/dd" v-model="activityInfo.activityDate"
+                    date-format="yy/mm/dd" showIcon :showOnFocus="false" fluid />
+            </td>
             <div for="content">內文</div>
             <BoaiEditor v-model="activityInfo.content" editorStyle="height: 150px" />
             <table>
                 <tr>
-                    <td><div for="applyStartDate">報名起日</div></td>
-                    <td><div for="applyEndDate">報名迄日</div></td>
+                    <td>
+                        <div for="applyStartDate">報名起日</div>
+                    </td>
+                    <td>
+                        <div for="applyEndDate">報名迄日</div>
+                    </td>
                 </tr>
                 <tr>
-                    <td><DatePicker id="datepicker-24h" placeholder="yyyy/MM/dd HH:mm" v-model="activityInfo.applyStartDate" showTime hourFormat="24" date-format="yy/mm/dd" showIcon :showOnFocus="false" fluid /></td>
-                    <td><DatePicker id="datepicker-24h" placeholder="yyyy/MM/dd HH:mm" v-model="activityInfo.applyEndDate" showTime hourFormat="24" date-format="yy/mm/dd" showIcon :showOnFocus="false" fluid /></td>
+                    <td>
+                        <DatePicker id="datepicker-24h" placeholder="yyyy/MM/dd HH:mm"
+                            v-model="activityInfo.applyStartDate" showTime hourFormat="24" date-format="yy/mm/dd"
+                            showIcon :showOnFocus="false" fluid />
+                    </td>
+                    <td>
+                        <DatePicker id="datepicker-24h" placeholder="yyyy/MM/dd HH:mm"
+                            v-model="activityInfo.applyEndDate" showTime hourFormat="24" date-format="yy/mm/dd" showIcon
+                            :showOnFocus="false" fluid />
+                    </td>
                 </tr>
             </table>
             <div for="image">圖片</div>
@@ -63,7 +78,10 @@
             </div>
         </Dialog>
         <Dialog v-model:visible="applyListDisplay" modal :header="applyListHeader" :style="{ width: '80%' }"
-        :breakpoints="{ '1200px': '90%', '800px': '100%' }">
+            :breakpoints="{ '1200px': '90%', '800px': '100%' }">
+            <BoaiTable :size="tableSize" :data="applyListData" :columns="applyListColumns" :totalCount="totalCount"
+                :loading="loading" :tableHeight="'222px'">
+            </BoaiTable>
         </Dialog>
     </div>
 </template>
@@ -71,7 +89,7 @@
 import { onMounted, ref } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
-import { ActivityInfo, CardItem, ColumnItem } from '../../interfaces/interface';
+import { ActivityInfo, ApplyForm, CardItem, ColumnItem } from '../../interfaces/interface';
 import apiClient from '../../request/request';
 import BoaiTable from '../../components/table/BoaiTable.vue';
 import dayjs from 'dayjs';
@@ -87,6 +105,7 @@ const applyListHeader = ref('報名清單');
 const applyListDisplay = ref(false);
 const dialogType = ref('');
 const data = ref<CardItem[]>([]);
+const applyListData = ref<ApplyForm[]>([]);
 const selectedRow = ref<any>();
 const totalCount = ref<number>(0);
 const activityInfo = ref<ActivityInfo>({
@@ -119,7 +138,46 @@ const columns = ref<ColumnItem[]>([
         header: '活動資訊'
     }
 ])
-
+const applyListColumns = ref<ColumnItem[]>([
+    {
+        field: 'id',
+        header: 'ID',
+        sortable: true
+    },
+    {
+        field: 'applyName',
+        header: '姓名'
+    },
+    {
+        field: 'applyDate',
+        header: '報名日期',
+        sortable: true
+    },
+    {
+        field: 'applySex',
+        header: '性別'
+    },
+    {
+        field: 'applyPhone',
+        header: '聯絡電話'
+    },
+    {
+        field: 'applyEmail',
+        header: 'Email'
+    },
+    {
+        field: 'applyResidence',
+        header: '居住地'
+    },
+    {
+        field: 'infoFrom',
+        header: '如何得知本活動'
+    },
+    {
+        field: 'introducerName',
+        header: '介紹人'
+    },
+])
 const handleSearch = async () => {
     loading.value = true;
     await apiClient.post('/api/activityInfo/getActivityInfo', {
@@ -217,12 +275,51 @@ const ok = async () => {
 const cancel = () => {
     display.value = false;
 }
-const openApplyListDialog = () => {
+const openApplyListDialog = async () => {
     if (!selectedRow.value) {
         toast.add({ severity: 'info', summary: 'Info', detail: '請選擇一筆', life: 3000 });
     } else {
         applyListHeader.value = selectedRow.value.title + ' - 報名清單';
-        applyListDisplay.value = true;
+        await apiClient.post('/api/applyInfo/getActivityApplyInfo/' + selectedRow.value.id)
+            .then(res => {
+                applyListData.value = res.data;
+                applyListData.value.forEach((data: ApplyForm) => {
+                    const sex = data.applySex;
+                    switch (sex) {
+                        case 'male':
+                            data.applySex = '男';
+                            break;
+                        case 'female':
+                            data.applySex = '女';
+                            break;
+                        case 'none':
+                            data.applySex = '其他';
+                            break;
+                        default:
+                            data.applySex = '';
+                            break;
+                    }
+                    const infoFrom = data.infoFrom;
+                    switch (infoFrom) {
+                        case 'fb':
+                            data.infoFrom = 'Facebook';
+                            break;
+                        case 'line':
+                            data.infoFrom = 'LINE文宣';
+                            break;
+                        case 'friend':
+                            data.infoFrom = '親友介紹';
+                            break;
+                        case 'other':
+                            data.infoFrom = '其他';
+                            break;
+                        default:
+                            data.infoFrom = '';
+                            break;
+                    }
+                })
+                applyListDisplay.value = true;
+            }).catch(err => console.error(err));
     }
 }
 const removeConfirm = (event: any) => {
