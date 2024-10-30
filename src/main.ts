@@ -36,6 +36,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 import DatePicker from 'primevue/datepicker';
 import RadioButton from 'primevue/radiobutton';
 import Editor from 'primevue/editor';
+import Tooltip from 'primevue/tooltip';
 
 const BoaiPreset = definePreset(Aura, Aura, {
     semantic: {
@@ -97,5 +98,6 @@ createApp(App)
     .component('DatePicker', DatePicker)
     .component('RadioButton', RadioButton)
     .component('Editor', Editor)
+    .directive('Tooltip', Tooltip)
     .use(router)
     .mount('#app');

@@ -21,42 +21,45 @@
             <div v-if="dialogType === 'S'">
                 <div for="searchName">姓名</div>
                 <InputText id="searchName" v-model="searchName" />
-                <Button label="查詢" icon="pi pi-search" @click="getApplyInfo" style="margin: 7px 0px;width: 100%;"></Button>
-                <hr style="margin-top: 15px; color: grey"/>
+                <div class="action-tool">
+                    <Button label="查詢" icon="pi pi-search" @click="checkApplyStatus" ></Button>
+                </div>
             </div>
-            <div for="applyName"><span style="color: red;">*</span> 姓名</div>
-            <InputText id="applyName" v-model="applyForm.applyName" :disabled="dialogType === 'S'"/>
-            <div for="applySex"><span style="color: red;">*</span> 性別</div>
-            <div style="height: 37px; display: flex;align-items: center;">
-                <RadioButton v-model="applyForm.applySex" inputId="male" name="male" value="male" :disabled="dialogType === 'S'"></RadioButton>
-                <label for="male" style="margin-left: 10px">男</label>
-                <RadioButton v-model="applyForm.applySex" inputId="female" name="female" value="female" :disabled="dialogType === 'S'"></RadioButton>
-                <label for="female" style="margin-left: 10px">女</label>
-                <RadioButton v-model="applyForm.applySex" inputId="none" name="none" value="none" :disabled="dialogType === 'S'"></RadioButton>
-                <label for="none" style="margin-left: 10px">其他</label>
-            </div>
-            <div for="applyPhone"><span style="color: red;">*</span> 聯絡電話</div>
-            <InputText id="applyPhone" v-model="applyForm.applyPhone" :disabled="dialogType === 'S'"/>
-            <div for="applyEmail"><span style="color: red;">*</span> Email</div>
-            <InputText id="applyEmail" v-model="applyForm.applyEmail" :disabled="dialogType === 'S'"/>
-            <div for="applyResidence">居住地</div>
-            <InputText id="applyResidence" v-model="applyForm.applyResidence" :disabled="dialogType === 'S'"/>
-            <div for="infoFrom">如何得知本活動</div>
-            <div style="height: 37px; display: flex;align-items: center;">
-                <RadioButton v-model="applyForm.infoFrom" inputId="fb" name="fb" value="fb" :disabled="dialogType === 'S'"></RadioButton>
-                <label for="fb" style="margin-left: 10px">Facebook</label>
-                <RadioButton v-model="applyForm.infoFrom" inputId="line" name="line" value="line" :disabled="dialogType === 'S'"></RadioButton>
-                <label for="line" style="margin-left: 10px">LINE文宣</label>
-                <RadioButton v-model="applyForm.infoFrom" inputId="friend" name="friend" value="friend" :disabled="dialogType === 'S'"></RadioButton>
-                <label for="friend" style="margin-left: 10px">親友介紹</label>
-                <RadioButton v-model="applyForm.infoFrom" inputId="other" name="other" value="other" :disabled="dialogType === 'S'"></RadioButton>
-                <label for="other" style="margin-left: 10px">其他</label>
-            </div>
-            <div for="introducerName">介紹人</div>
-            <InputText id="introducerName" v-model="applyForm.introducerName" :disabled="dialogType === 'S'"/>
-            <div class="action-tool">
-                <Button type="button" icon="pi pi-times" label="關閉" severity="secondary" @click="cancel"></Button>
-                <Button v-if="dialogType === 'A'" type="button" icon="pi pi-check" label="送出" @click="ok"></Button>
+            <div v-else>
+                <div for="applyName"><span style="color: red;">*</span> 姓名</div>
+                <InputText id="applyName" v-model="applyForm.applyName" />
+                <div for="applySex"><span style="color: red;">*</span> 性別</div>
+                <div style="height: 37px; display: flex;align-items: center;">
+                    <RadioButton v-model="applyForm.applySex" inputId="male" name="male" value="male" ></RadioButton>
+                    <label for="male" style="margin-left: 10px">男</label>
+                    <RadioButton v-model="applyForm.applySex" inputId="female" name="female" value="female" ></RadioButton>
+                    <label for="female" style="margin-left: 10px">女</label>
+                    <RadioButton v-model="applyForm.applySex" inputId="none" name="none" value="none" ></RadioButton>
+                    <label for="none" style="margin-left: 10px">其他</label>
+                </div>
+                <div for="applyPhone"><span style="color: red;">*</span> 聯絡電話</div>
+                <InputText id="applyPhone" v-model="applyForm.applyPhone" />
+                <div for="applyEmail"><span style="color: red;">*</span> Email</div>
+                <InputText id="applyEmail" v-model="applyForm.applyEmail" />
+                <div for="applyResidence">居住地</div>
+                <InputText id="applyResidence" v-model="applyForm.applyResidence" />
+                <div for="infoFrom">如何得知本活動</div>
+                <div style="height: 37px; display: flex;align-items: center;">
+                    <RadioButton v-model="applyForm.infoFrom" inputId="fb" name="fb" value="fb" ></RadioButton>
+                    <label for="fb" style="margin-left: 10px">Facebook</label>
+                    <RadioButton v-model="applyForm.infoFrom" inputId="line" name="line" value="line" ></RadioButton>
+                    <label for="line" style="margin-left: 10px">LINE文宣</label>
+                    <RadioButton v-model="applyForm.infoFrom" inputId="friend" name="friend" value="friend" ></RadioButton>
+                    <label for="friend" style="margin-left: 10px">親友介紹</label>
+                    <RadioButton v-model="applyForm.infoFrom" inputId="other" name="other" value="other" ></RadioButton>
+                    <label for="other" style="margin-left: 10px">其他</label>
+                </div>
+                <div for="introducerName">介紹人</div>
+                <InputText id="introducerName" v-model="applyForm.introducerName" />
+                <div class="action-tool">
+                    <Button type="button" icon="pi pi-times" label="關閉" severity="secondary" @click="cancel"></Button>
+                    <Button type="button" icon="pi pi-check" label="送出" @click="ok"></Button>
+                </div>
             </div>
         </Dialog>
     </div>
@@ -115,7 +118,7 @@ const ok = async () => {
     // const flag = await verifyRecaptcha(token);
     const flag = true;
     if (flag) {
-        await apiClient.post('/api/activityInfo/apply', {
+        await apiClient.post('/api/applyInfo/apply', {
             activityId: id,
             applyName: applyForm.value.applyName,
             applySex: applyForm.value.applySex,
@@ -185,20 +188,13 @@ const getActivityInfoDetail = async () => {
         enableApplyButton(applyStartDate.value, applyEndDate.value);
     }).catch(err => console.error(err));
 }
-const getApplyInfo = async () => {
-    await apiClient.post('/api/activityInfo/getApplyInfo', {
+const checkApplyStatus = async () => {
+    await apiClient.post('/api/applyInfo/checkApplyStatus', {
         activityId: id,
         applyName: searchName.value
     }).then(res => {
         if (res.data) {
-            applyForm.value.applyName = res.data.applyName;
-            applyForm.value.applySex = res.data.applySex;
-            applyForm.value.applyPhone = res.data.applyPhone;
-            applyForm.value.applyEmail = res.data.applyEmail;
-            applyForm.value.applyResidence = res.data.applyResidence;
-            applyForm.value.infoFrom = res.data.infoFrom;
-            applyForm.value.introducerName = res.data.introducerName;
-            toast.add({ severity: 'success', summary: 'Success', detail: '查詢成功', life: 3000 });
+            toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
         } else {
             toast.add({ severity: 'warn', summary: 'Warning', detail: '查無資料', life: 3000 });
         }

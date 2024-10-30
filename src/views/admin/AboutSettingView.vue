@@ -8,10 +8,10 @@
                     <InputText id="title" v-model="title" />
                 </FloatLabel>
                 <ConfirmPopup />
-                <Button icon="pi pi-search" @click="handleSearch" />
-                <Button icon="pi pi-plus" @click="openCreateDialog" />
-                <Button icon="pi pi-pen-to-square" @click="openModifyDialog" />
-                <Button icon="pi pi-trash" @click="removeConfirm" />
+                <Button v-tooltip.top="'查詢'" icon="pi pi-search" @click="handleSearch" />
+                <Button v-tooltip.top="'新增'" icon="pi pi-plus" @click="openCreateDialog" />
+                <Button v-tooltip.top="'修改'" icon="pi pi-pen-to-square" @click="openModifyDialog" />
+                <Button v-tooltip.top="'刪除'" icon="pi pi-trash" @click="removeConfirm" />
             </div>
             <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading" :tableHeight="'222px'"
                 :selectionMode="'single'" @selected-row="handleSelectedRow">

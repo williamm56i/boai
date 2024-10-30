@@ -8,10 +8,11 @@
                     <InputText id="title" v-model="title" />
                 </FloatLabel>
                 <ConfirmPopup />
-                <Button icon="pi pi-search" @click="handleSearch" />
-                <Button icon="pi pi-plus" @click="openCreateDialog" />
-                <Button icon="pi pi-pen-to-square" @click="openModifyDialog" />
-                <Button icon="pi pi-trash" @click="removeConfirm" />
+                <Button v-tooltip.top="'查詢'" icon="pi pi-search" @click="handleSearch" />
+                <Button v-tooltip.top="'新增'" icon="pi pi-plus" @click="openCreateDialog" />
+                <Button v-tooltip.top="'修改活動'" icon="pi pi-pen-to-square" @click="openModifyDialog" />
+                <Button v-tooltip.top="'報名清單'" icon="pi pi-list" @click="openApplyListDialog" />
+                <Button v-tooltip.top="'刪除'" icon="pi pi-trash" @click="removeConfirm" />
             </div>
             <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading" :tableHeight="'222px'"
                 :selectionMode="'single'" @selected-row="handleSelectedRow">
@@ -61,6 +62,9 @@
                 <Button type="button" icon="pi pi-check" label="儲存" @click="ok"></Button>
             </div>
         </Dialog>
+        <Dialog v-model:visible="applyListDisplay" modal :header="applyListHeader" :style="{ width: '80%' }"
+        :breakpoints="{ '1200px': '90%', '800px': '100%' }">
+        </Dialog>
     </div>
 </template>
 <script setup lang="ts">
@@ -79,6 +83,8 @@ const tableSize = ref('small');
 const loading = ref(false);
 const title = ref('');
 const display = ref(false);
+const applyListHeader = ref('報名清單');
+const applyListDisplay = ref(false);
 const dialogType = ref('');
 const data = ref<CardItem[]>([]);
 const selectedRow = ref<any>();
@@ -210,6 +216,14 @@ const ok = async () => {
 }
 const cancel = () => {
     display.value = false;
+}
+const openApplyListDialog = () => {
+    if (!selectedRow.value) {
+        toast.add({ severity: 'info', summary: 'Info', detail: '請選擇一筆', life: 3000 });
+    } else {
+        applyListHeader.value = selectedRow.value.title + ' - 報名清單';
+        applyListDisplay.value = true;
+    }
 }
 const removeConfirm = (event: any) => {
     if (!selectedRow.value) {
