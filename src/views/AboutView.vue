@@ -5,7 +5,7 @@
       <Skeleton v-show="!isImageLoaded" width="100%" height="30rem"></Skeleton>
     </section>
     <section class="second">
-      <Carousel :value="products" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="5000"
+      <Carousel :value="products" :numVisible="numVisible" :numScroll="1" :circular="true" :autoplayInterval="5000"
         :responsiveOptions="responsiveOptions">
         <template #item="slotProps">
           <BoaiCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :image-url="slotProps.data.image"
@@ -22,12 +22,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { CardItem, DialogItem } from '../interfaces/interface';
 import BoaiCard from '../components/card/BoaiCard.vue';
 import apiClient from '../request/request';
 const dialogVisible = ref(false);
 const products = ref<CardItem[]>([]);
+const numVisible = ref(3);
 const responsiveOptions = ref([
   {
     breakpoint: '1200px',
@@ -74,8 +75,19 @@ const getImage = async (id: number): Promise<string> => {
       return res.data;
     }).catch(err => console.log(err));
 }
+const initCarouselNumVisible = () => {
+  const width = window.innerWidth;
+  if (width <= 800) {
+    numVisible.value = 1;
+  } else if (width <= 1200) {
+    numVisible.value = 2;
+  } else {
+    numVisible.value = 3;
+  }
+}
 onMounted(async () => {
   await getAboutInfo();
+  initCarouselNumVisible();
 })
 </script>
 
