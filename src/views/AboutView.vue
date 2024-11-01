@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <Toast />
     <section>
       <img src="/about.jpg" width="100%" @load="handleImageLoading" v-show="isImageLoaded" />
       <Skeleton v-show="!isImageLoaded" width="100%" height="30rem"></Skeleton>
@@ -26,6 +27,11 @@ import { onMounted, ref } from 'vue';
 import { CardItem, DialogItem } from '../interfaces/interface';
 import BoaiCard from '../components/card/BoaiCard.vue';
 import apiClient from '../request/request';
+import { useRouter } from 'vue-router';
+import { useToast } from "primevue/usetoast";
+
+const router = useRouter();
+const toast = useToast();
 const dialogVisible = ref(false);
 const products = ref<CardItem[]>([]);
 const numVisible = ref(3);
@@ -86,6 +92,10 @@ const initCarouselNumVisible = () => {
   }
 }
 onMounted(async () => {
+  const message = router.currentRoute.value.query.message;
+    if (message) {
+      toast.add(JSON.parse(message.toString()));
+    }
   await getAboutInfo();
   initCarouselNumVisible();
 })

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Toast />
         <Panel header="經營團隊 - 管理">
             <div style="display: flex; flex-direction: row;">
                 <FloatLabel variant="on">
