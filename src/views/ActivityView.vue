@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import ActCard from '../components/card/ActCard.vue';
 import { onMounted, ref } from 'vue';
-import { CardItem } from '../interfaces/interface';
+import { ActivityInfo, CardItem } from '../interfaces/interface';
 import { useRouter } from 'vue-router';
 import apiClient from '../request/request';
 const router = useRouter();
@@ -60,7 +60,7 @@ const getActivityInfo = async () => {
         acts2023.value = [];
         actsOther.value = [];
         for (const act of res.data) {
-            act.image = await getImage(act.id);
+            // act.image = await getImage(act.id);
             if (act.activityGroup === '2024') {
                 acts2024.value.push(act);
             } else if (act.activityGroup === '2023') {
@@ -69,6 +69,14 @@ const getActivityInfo = async () => {
                 actsOther.value.push(act);
             }
         };
+    fetchActivityInfoImage(acts2024.value);
+    fetchActivityInfoImage(acts2023.value);
+    fetchActivityInfoImage(actsOther.value);
+}
+const fetchActivityInfoImage = async (acts: Array<CardItem>) => {
+    for (const act of acts) {
+        act.image = await getImage(act.id);
+    }
 }
 const getImage = async (id: number): Promise<string> => {
   return await apiClient.get('/api/activityInfo/getImage/' + id)
