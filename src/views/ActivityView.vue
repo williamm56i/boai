@@ -28,7 +28,26 @@ import { CardItem } from '../interfaces/interface';
 import { useRouter } from 'vue-router';
 import apiClient from '../request/request';
 const router = useRouter();
-const acts2024  = ref<CardItem[]>([]);
+const acts2024  = ref<CardItem[]>([
+    {
+        id: 1,
+        title: '',
+        subtitle: '',
+        image: ''
+    },
+    {
+        id: 2,
+        title: '',
+        subtitle: '',
+        image: ''
+    },
+    {
+        id: 3,
+        title: '',
+        subtitle: '',
+        image: ''
+    }
+]);
 const acts2023 = ref<CardItem[]>([]);
 const actsOther = ref<CardItem[]>([]);
 const handleCardClick = (id: number) => {
@@ -40,7 +59,8 @@ const getActivityInfo = async () => {
         acts2024.value = [];
         acts2023.value = [];
         actsOther.value = [];
-        res.data.forEach( (act: any) => {
+        res.data.forEach( async (act: any) => {
+            act.image = await getImage(act.id);
             if (act.activityGroup === '2024') {
                 acts2024.value.push(act);
             } else if (act.activityGroup === '2023') {
@@ -51,8 +71,14 @@ const getActivityInfo = async () => {
         });
     }).catch(err => console.error(err));
 }
-onMounted(() => {
-    getActivityInfo();
+const getImage = async (id: number): Promise<string> => {
+  return apiClient.get('/api/activityInfo/getImage/' + id)
+    .then(res => {
+      return res.data;
+    }).catch(err => console.log(err));
+}
+onMounted(async () => {
+    await getActivityInfo();
 })
 </script>
 <style scoped>

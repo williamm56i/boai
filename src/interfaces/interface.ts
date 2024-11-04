@@ -24,7 +24,7 @@ export interface MgrItem {
 }
 export interface DialogItem {
     header: string,
-    imageUrl: string,
+    imageUrl: string | undefined,
     content?: string
 }
 export interface JwtPayload {
@@ -50,7 +50,7 @@ export interface AboutInfo {
     subtitle: string,
     enable: string,
     content: string,
-    image: string | undefined,
+    image: string | undefined | null,
     createId: string,
     createDate: string,
     updateId: string,
@@ -60,7 +60,7 @@ export interface ManagerInfo {
     id: number | undefined | null,
     title: string,
     name: string,
-    image: string | undefined,
+    image: string | undefined | null,
     description1: string,
     description2: string,
     createId: string,
@@ -75,7 +75,7 @@ export interface ActivityInfo {
     applyStartDate: Date | null,
     applyEndDate: Date | null,
     content: string,
-    image: string | undefined,
+    image: string | undefined | null,
     activityGroup: string,
     activityDate: Date | null,
     createId: string,

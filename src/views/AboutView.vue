@@ -33,7 +33,26 @@ import { useToast } from "primevue/usetoast";
 const router = useRouter();
 const toast = useToast();
 const dialogVisible = ref(false);
-const products = ref<CardItem[]>([]);
+const products = ref<CardItem[]>([
+  {
+    id: 1,
+    title: '',
+    subtitle: '',
+    image: ''
+  },
+  {
+    id: 2,
+    title: '',
+    subtitle: '',
+    image: ''
+  },
+  {
+    id: 3,
+    title: '',
+    subtitle: '',
+    image: ''
+  }
+]);
 const numVisible = ref(3);
 const responsiveOptions = ref([
   {
@@ -63,14 +82,14 @@ const handleCardClick = (data: CardItem) => {
   dialogVisible.value = true;
 }
 const getAboutInfo = async () => {
-  await apiClient.get('/api/aboutInfo/getAll').then(res => {
+  await apiClient.get('/api/aboutInfo/getAll').then(async res => {
     products.value = res.data;
-    fetchAboutInfoImage();
+    await fetchAboutInfoImage();
   }).catch(err => {
     console.error(err);
   });
 }
-const fetchAboutInfoImage = () => {
+const fetchAboutInfoImage = async () => {
   products.value.forEach(async product => {
     product.image = await getImage(product.id)
   })

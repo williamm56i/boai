@@ -4,7 +4,9 @@
     <img src="/icon.png" class="small-footer" width="90px" />
     <table style="margin-left: 30px; margin-top: 5px;">
       <tr>
-        <td colspan="2">聯絡我們&nbsp;<i class="pi pi-facebook"></i>&nbsp;<i class="pi pi-instagram"></i></td>
+        <td colspan="2">聯絡我們：
+          <a href="https://line.me/ti/g2/P9x8cQjWPV9l-U0cRZhtuCAni9bCA7qT5MjIQw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank"><i class="fab fa-line" style="font-size: 16px;"></i>中華民國推動博愛關懷協會</a>&nbsp;
+          <a href="https://www.instagram.com/polarischan888/?igsh=NmFuZ2lxbmhuZXF6" target="_blank"><i class="pi pi-instagram"></i>北極星共享空間</a></td>
       </tr>
       <tr>
         <td>地址：</td>
@@ -16,7 +18,7 @@
       </tr>
       <tr>
         <td>電話：</td>
-        <td>(03)1234-5678</td>
+        <td>(03)376-5660</td>
       </tr>
       <tr>
         <td colspan="2">Copyright®中華民國推動博愛關懷協會</td>
@@ -29,7 +31,7 @@
 
 </script>
 
-<style>
+<style scoped>
 .footer {
   display: flex;
   flex-direction: row;
@@ -59,5 +61,13 @@
   .small-footer {
     display: block;
   }
+}
+
+a:link, a:visited {
+  color: white;
+}
+
+a:hover, a:active {
+  color: #646cff;
 }
 </style>

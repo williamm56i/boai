@@ -6,9 +6,11 @@
         </template>
         <template #subtitle>
             {{ subtitle }}
+            <Skeleton v-show="!isImageLoaded" width="100%" height="2rem"></Skeleton>
         </template>
         <template #content>
             <b>{{ title }}</b>
+            <Skeleton v-show="!isImageLoaded" width="100%" height="2rem"></Skeleton>
         </template>
     </Card>
 </template>
