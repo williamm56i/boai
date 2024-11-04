@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import ActCard from '../components/card/ActCard.vue';
 import { onMounted, ref } from 'vue';
-import { ActivityInfo, CardItem } from '../interfaces/interface';
+import { CardItem } from '../interfaces/interface';
 import { useRouter } from 'vue-router';
 import apiClient from '../request/request';
 const router = useRouter();
