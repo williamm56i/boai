@@ -55,11 +55,11 @@ const handleCardClick = (id: number) => {
 }
 const getActivityInfo = async () => {
 
-    await apiClient.get('/api/activityInfo/getAll').then(res => {
+    const res = await apiClient.get('/api/activityInfo/getAll')
         acts2024.value = [];
         acts2023.value = [];
         actsOther.value = [];
-        res.data.forEach( async (act: any) => {
+        for (const act of res.data) {
             act.image = await getImage(act.id);
             if (act.activityGroup === '2024') {
                 acts2024.value.push(act);
@@ -68,11 +68,10 @@ const getActivityInfo = async () => {
             } else {
                 actsOther.value.push(act);
             }
-        });
-    }).catch(err => console.error(err));
+        };
 }
 const getImage = async (id: number): Promise<string> => {
-  return apiClient.get('/api/activityInfo/getImage/' + id)
+  return await apiClient.get('/api/activityInfo/getImage/' + id)
     .then(res => {
       return res.data;
     }).catch(err => console.log(err));
