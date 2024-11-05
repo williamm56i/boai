@@ -13,6 +13,11 @@
             @click="handleCardClick(slotProps.data)"></BoaiCard>
         </template>
       </Carousel>
+      <div style="display: flex; justify-content: center">
+        <BoaiTable :size="'small'" :paginator="false" :data="data" :columns="columns" :totalCount="totalCount"
+          :loading="loading" :tableHeight="'222px'" :selectionMode="'single'" @selected-row="handleSelectedRow"
+          class=bulletinBoard></BoaiTable>
+      </div>
     </section>
   </div>
   <Dialog v-model:visible="dialogVisible" modal :header="dialogInfo.header" :style="{ width: '50%' }"
@@ -24,8 +29,9 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { CardItem, DialogItem } from '../interfaces/interface';
+import { BulletinBoardItem, CardItem, ColumnItem, DialogItem } from '../interfaces/interface';
 import BoaiCard from '../components/card/BoaiCard.vue';
+import BoaiTable from '../components/table/BoaiTable.vue';
 import apiClient from '../request/request';
 import { useRouter } from 'vue-router';
 import { useToast } from "primevue/usetoast";
@@ -33,6 +39,20 @@ import { useToast } from "primevue/usetoast";
 const router = useRouter();
 const toast = useToast();
 const dialogVisible = ref(false);
+const loading = ref(false);
+const totalCount = ref<number>(0);
+const selectedRow = ref<any>();
+const columns = ref<ColumnItem[]>([
+  {
+    field: 'announceDate',
+    header: '日期'
+  },
+  {
+    field: 'subject',
+    header: '最新消息'
+  }
+]);
+const data = ref<BulletinBoardItem[]>([]);
 const products = ref<CardItem[]>([
   {
     id: 1,
@@ -110,13 +130,26 @@ const initCarouselNumVisible = () => {
     numVisible.value = 3;
   }
 }
+const getBulletinBoard = async () => {
+  loading.value = true;
+  await apiClient.get('/api/bulletinBoard/getAll').then(res => {
+    data.value = res.data;
+  }).catch(err => console.error(err))
+    .finally(() => loading.value = false);
+}
+const handleSelectedRow = (row: object) => {
+  selectedRow.value = row;
+  console.log(selectedRow.value);
+}
 onMounted(async () => {
   const message = router.currentRoute.value.query.message;
-    if (message) {
-      toast.add(JSON.parse(message.toString()));
-    }
+  if (message) {
+    toast.add(JSON.parse(message.toString()));
+  }
+
   await getAboutInfo();
   initCarouselNumVisible();
+  await getBulletinBoard();
 })
 </script>
 
@@ -141,5 +174,15 @@ onMounted(async () => {
 
 .second {
   background: linear-gradient(to left, rgb(238, 226, 171) 40%, rgba(253, 208, 0, 0) 70%);
+}
+
+.bulletinBoard {
+  width: 80%;
+}
+
+@media (max-width: 800px) {
+  .bulletboard {
+    width: 98%;
+  }
 }
 </style>

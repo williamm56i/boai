@@ -94,3 +94,19 @@ export interface ApplyForm {
     infoFrom: string,
     introducerName: string | null | undefined
 }
+export interface BulletinBoardItem {
+    id?: number | null | undefined,
+    announceDate: string,
+    subject: string
+}
+export interface BulletinBoard {
+    id?: number | null | undefined,
+    announceDate: string,
+    subject: string,
+    contentData: string,
+    enable: string,
+    createId?: string,
+    createDate?: string,
+    updateId?: string,
+    updateDate?: string
+}
