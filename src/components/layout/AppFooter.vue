@@ -2,28 +2,38 @@
   <div class="footer">
     <img src="/IMG_2911.png" class="large-footer" width="180px" />
     <img src="/icon.png" class="small-footer" width="90px" />
-    <table style="margin-left: 30px; margin-top: 5px;">
-      <tr>
-        <td colspan="2">聯絡我們：
-          <a href="https://line.me/ti/g2/P9x8cQjWPV9l-U0cRZhtuCAni9bCA7qT5MjIQw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank"><i class="fab fa-line" style="font-size: 16px;"></i>中華民國推動博愛關懷協會</a>&nbsp;
-          <a href="https://www.instagram.com/polarischan888/?igsh=NmFuZ2lxbmhuZXF6" target="_blank"><i class="pi pi-instagram"></i>北極星共享空間</a></td>
-      </tr>
-      <tr>
-        <td>地址：</td>
-        <td>桃園市八德區介壽路一段1033號4樓</td>
-      </tr>
-      <tr>
-        <td>信箱：</td>
-        <td>boai@gmail.com</td>
-      </tr>
-      <tr>
-        <td>電話：</td>
-        <td>(03)376-5660</td>
-      </tr>
-      <tr>
-        <td colspan="2">Copyright®中華民國推動博愛關懷協會</td>
-      </tr>
-    </table>
+    <div style="display: flex; flex-direction: column;">
+      <table style="margin-left: 30px; margin-top: 5px;">
+        <tr>
+          <td>聯絡我們：</td>
+          <td><a href="https://line.me/ti/g2/P9x8cQjWPV9l-U0cRZhtuCAni9bCA7qT5MjIQw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank"><i class="fab fa-line" style="font-size: 16px;"></i>中華民國推動博愛關懷協會</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <a href="https://www.instagram.com/polarischan888/?igsh=NmFuZ2lxbmhuZXF6" target="_blank"><i class="pi pi-instagram"></i>北極星共享空間</a>
+          </td>
+        </tr>
+        </table>
+        <table style="margin-left: 30px; margin-top: 5px;">
+        <tr>
+          <td>地址：</td>
+          <td>桃園市八德區介壽路一段1033號4樓</td>
+        </tr>
+        <tr>
+          <td>信箱：</td>
+          <td>boai@gmail.com</td>
+        </tr>
+        <tr>
+          <td>電話：</td>
+          <td>(03)376-5660</td>
+        </tr>
+        <tr>
+          <td colspan="2">Copyright®中華民國推動博愛關懷協會</td>
+        </tr>
+      </table>
+
+    </div>
   </div>
 </template>
 
