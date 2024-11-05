@@ -14,8 +14,8 @@
             <a href="https://www.instagram.com/polarischan888/?igsh=NmFuZ2lxbmhuZXF6" target="_blank"><i class="pi pi-instagram"></i>北極星共享空間</a>
           </td>
         </tr>
-        </table>
-        <table style="margin-left: 30px; margin-top: 5px;">
+      </table>
+      <table style="margin-left: 30px; margin-top: 5px;">
         <tr>
           <td>地址：</td>
           <td>桃園市八德區介壽路一段1033號4樓</td>
@@ -32,7 +32,6 @@
           <td colspan="2">Copyright®中華民國推動博愛關懷協會</td>
         </tr>
       </table>
-
     </div>
   </div>
 </template>
