@@ -2,15 +2,15 @@
     <Card>
         <template #header>
             <img :src="imageUrl" width="80%" @load="handleImageLoading" v-show="isImageLoaded" />
-            <Skeleton v-show="!isImageLoaded" width="100%" height="10rem"></Skeleton>
+            <Skeleton v-show="!isImageLoaded" width="100%" height="14rem"></Skeleton>
         </template>
         <template #subtitle>
             {{ subtitle }}
-            <Skeleton v-show="!isImageLoaded" width="100%" height="2rem"></Skeleton>
+            <Skeleton v-show="!subtitle" width="100%" height="2rem"></Skeleton>
         </template>
         <template #content>
             <b>{{ title }}</b>
-            <Skeleton v-show="!isImageLoaded" width="100%" height="2rem"></Skeleton>
+            <Skeleton v-show="!title" width="100%" height="2rem"></Skeleton>
         </template>
     </Card>
 </template>

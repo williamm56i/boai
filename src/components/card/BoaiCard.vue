@@ -2,13 +2,13 @@
     <Card>
         <template #header>
             <h2>{{ title }}</h2>
-            <div v-show="!isImageLoaded" style="padding: 1.25rem;">
+            <div v-show="!title" style="padding: 1.25rem;">
                 <Skeleton width="100%" height="2rem"></Skeleton>
             </div>
         </template>
         <template #subtitle>
             {{ subtitle }}
-            <Skeleton v-show="!isImageLoaded" width="100%" height="2rem"></Skeleton>
+            <Skeleton v-show="!subtitle" width="100%" height="2rem"></Skeleton>
         </template>
         <template #content>
             <img :src="imageUrl" width="100%" @load="handleImageLoading" v-show="isImageLoaded"/>
