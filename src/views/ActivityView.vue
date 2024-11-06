@@ -60,7 +60,6 @@ const getActivityInfo = async () => {
         acts2023.value = [];
         actsOther.value = [];
         for (const act of res.data) {
-            // act.image = await getImage(act.id);
             if (act.activityGroup === '2024') {
                 acts2024.value.push(act);
             } else if (act.activityGroup === '2023') {

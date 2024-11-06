@@ -3,8 +3,10 @@
         <!-- header area content -->
         <div class="content">
             <div class="banner">
-                <img src="/banner.png" class="large-banner" width="350px" />
-                <img src="/banner.png" class="small-banner" width="200px" />
+                <router-link v-slot="{ navigate }" :to="'/about'" custom>
+                    <img src="/banner.png" class="large-banner" width="350px" @click="navigate"/>
+                    <img src="/banner.png" class="small-banner" width="200px" @click="navigate"/>
+                </router-link>
             </div>
             <div class="menu">
                 <TabMenu :model="items">
@@ -50,7 +52,6 @@ const authCheck = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
         const payload = jwtDecode<JwtPayload>(jwt);
-        console.log(payload);
         if (payload.roles.includes('ROLE_ADMIN')) {
             items.value.push({label: '後台管理', route: '/admin'});
         }
@@ -82,10 +83,12 @@ onMounted( () => {
 
 .large-banner {
     display: block;
+    cursor: pointer;
 }
 
 .small-banner {
     display: none;
+    cursor: pointer;
 }
 
 .menu {
@@ -118,10 +121,12 @@ onMounted( () => {
 
     .large-banner {
         display: none;
+        cursor: pointer;
     }
 
     .small-banner {
         display: block;
+        cursor: pointer;
     }
 
     .menu {

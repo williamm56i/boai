@@ -16,7 +16,6 @@ const getManagerInfo = async () => {
     await apiClient.get('/api/managerInfo/getAll')
         .then(res => {
             managers.value = res.data;
-            console.log('done ' + new Date());
         }).catch(err => console.error(err))
 }
 const updateScreenSize = () => {

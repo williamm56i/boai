@@ -19,7 +19,7 @@ import { ref } from 'vue';
 defineProps<{
     title: string,
     subtitle: string,
-    imageUrl: string
+    imageUrl: string | undefined
 }>();
 const isImageLoaded = ref(false);
 const handleImageLoading = () => {

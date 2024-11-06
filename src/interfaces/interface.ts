@@ -9,7 +9,7 @@ export interface MenuItem {
 export interface CardItem {
     id: number,
     title: string,
-    image: string,
+    image: string | undefined,
     subtitle: string,
     content?: string
 }
