@@ -1,10 +1,10 @@
 <template>
     <div>
         <Toast />
-        <Panel header="關於我們 - 管理">
+        <Panel header="最新消息 - 管理">
             <div style="display: flex; flex-direction: row;">
                 <FloatLabel variant="on">
-                    <label for="title">主題</label>
+                    <label for="title">標題</label>
                     <InputText id="title" v-model="title" />
                 </FloatLabel>
                 <ConfirmPopup />
@@ -13,36 +13,32 @@
                 <Button v-tooltip.top="'修改'" icon="pi pi-pen-to-square" @click="openModifyDialog" />
                 <Button v-tooltip.top="'刪除'" icon="pi pi-trash" @click="removeConfirm" />
             </div>
-            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading" :tableHeight="'222px'"
-                :selectionMode="'single'" @selected-row="handleSelectedRow">
+            <BoaiTable :size="tableSize" :data="data" :columns="columns" :totalCount="totalCount" :loading="loading"
+                :tableHeight="'222px'" :selectionMode="'single'" @selected-row="handleSelectedRow">
             </BoaiTable>
         </Panel>
 
         <Dialog v-model:visible="display" modal :header="dialogType === 'C' ? '新增' : '維護'" :style="{ width: '50%' }"
             :breakpoints="{ '1200px': '70%', '800px': '100%' }">
-            <div for="title">主題</div>
-            <InputText id="title" v-model="aboutInfo.title" />
-            <div for="subtitle">標語</div>
-            <InputText id="subtitle" v-model="aboutInfo.subtitle" />
-            <div for="content">內文</div>
-            <Textarea id="content" v-model="aboutInfo.content" rows="3" style="width: 100%;" />
+            <div for="subject">標題</div>
+            <InputText id="subject" v-model="bulletinBoard.subject" />
+            <div for="subtitle">公告日</div>
+            <DatePicker id="datepicker-24h" placeholder="yyyy/MM/dd HH:mm"
+                            v-model="bulletinBoard.announceDate" showTime hourFormat="24" date-format="yy/mm/dd"
+                            showIcon :showOnFocus="false" fluid />
             <div for="enable">生效</div>
-            <Select id="enable" v-model="aboutInfo.enable" :options="enableOptions" optionLabel="label"
+            <Select id="enable" v-model="bulletinBoard.enable" :options="enableOptions" optionLabel="label"
                 optionValue="value" />
-            <div for="image">圖片</div>
-            <div class="about-photo">
-                <img :src="aboutInfo.image" width="300px" height="auto" />
-            </div>
-            <FileUpload ref="fileupload" mode="basic" name="aboutPhoto[]" accept="image/*" :maxFileSize="1000000"
-                :customUpload="true" chooseLabel="選擇圖片" @select="onSelectFile" />
-            <table>
+            <div for="content">內文</div>
+            <BoaiEditor v-model="bulletinBoard.contentData" editorStyle="height: 150px" />
+            <table class="edit-info">
                 <tr>
-                    <td>建立人員：{{ aboutInfo.createId }}</td>
-                    <td>建立日期：{{ aboutInfo.createDate }}</td>
+                    <td>建立人員：{{ bulletinBoard.createId }}</td>
+                    <td>建立日期：{{ bulletinBoard.createDate }}</td>
                 </tr>
                 <tr>
-                    <td>異動人員：{{ aboutInfo.updateId }}</td>
-                    <td>異動日期：{{ aboutInfo.updateDate }}</td>
+                    <td>異動人員：{{ bulletinBoard.updateId }}</td>
+                    <td>異動日期：{{ bulletinBoard.updateDate }}</td>
                 </tr>
             </table>
             <div class="action-tool">
@@ -56,9 +52,11 @@
 import { onMounted, ref } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
-import { AboutInfo, CardItem, ColumnItem } from '../../interfaces/interface';
+import { BulletinBoard, CardItem, ColumnItem } from '../../interfaces/interface';
 import apiClient from '../../request/request';
 import BoaiTable from '../../components/table/BoaiTable.vue';
+import dayjs from 'dayjs';
+import BoaiEditor from '../../components/editor/BoaiEditor.vue';
 
 const toast = useToast();
 const confirm = useConfirm();
@@ -67,20 +65,19 @@ const loading = ref(false);
 const title = ref('');
 const display = ref(false);
 const dialogType = ref('');
-const enableOptions = ref([
-    { label: 'Y', value: 'Y' },
-    { label: 'N', value: 'N' }
-]);
 const data = ref<CardItem[]>([]);
 const selectedRow = ref<any>();
 const totalCount = ref<number>(0);
-const aboutInfo = ref<AboutInfo>({
+    const enableOptions = ref([
+    { label: 'Y', value: 'Y' },
+    { label: 'N', value: 'N' }
+]);
+const bulletinBoard = ref<BulletinBoard>({
     id: null,
-    title: '',
-    subtitle: '',
+    subject: '',
+    announceDate: null,
+    contentData: '',
     enable: 'Y',
-    content: '',
-    image: '',
     createId: '',
     createDate: '',
     updateId: '',
@@ -93,12 +90,13 @@ const columns = ref<ColumnItem[]>([
         sortable: true
     },
     {
-        field: 'title',
-        header: '主題'
+        field: 'announceDate',
+        header: '日期',
+        sortable: true
     },
     {
-        field: 'subtitle',
-        header: '標語'
+        field: 'subject',
+        header: '標題'
     },
     {
         field: 'enable',
@@ -107,10 +105,9 @@ const columns = ref<ColumnItem[]>([
         sortable: true
     }
 ])
-
 const handleSearch = async () => {
     loading.value = true;
-    await apiClient.post('/api/aboutInfo/getAboutInfo', {
+    await apiClient.post('/api/bulletinBoard/getBulletinBoard', {
         title: title.value
     }).then(res => {
         data.value = res.data;
@@ -121,7 +118,6 @@ const handleSearch = async () => {
 }
 const handleSelectedRow = (row: object) => {
     selectedRow.value = row;
-    console.log(selectedRow.value);
 }
 const openCreateDialog = () => {
     resetDialog();
@@ -134,9 +130,10 @@ const openModifyDialog = async () => {
         toast.add({ severity: 'info', summary: 'Info', detail: '請選擇一筆', life: 3000 });
     } else {
         const id = selectedRow.value.id;
-        await apiClient.get('/api/aboutInfo/getAboutInfoDetail/' + id)
+        await apiClient.get('/api/bulletinBoard/getBulletinBoardDetail/' + id)
             .then(res => {
-                aboutInfo.value = res.data;
+                res.data.announceDate = res.data.announceDate ? dayjs(res.data.announceDate, 'YYYY/MM/DD HH:mm').toDate() : null;
+                bulletinBoard.value = res.data;
                 display.value = true;
             }).catch(err => {
                 console.error(err);
@@ -144,29 +141,13 @@ const openModifyDialog = async () => {
             });
     }
 }
-const onSelectFile = (event: any) => {
-    const file = event.files[0];
-    if (!file.type.startsWith("image/")) {
-        toast.add({ severity: 'error', summary: 'Error', detail: '僅提供圖片上傳', life: 3000 });
-        return false;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-        const base64String = reader.result;
-        aboutInfo.value.image = base64String?.toString()
-    };
-    reader.readAsDataURL(file);
-
-    return false;
-}
 const ok = async () => {
     if (dialogType.value === 'C') {
-        await apiClient.post('/api/aboutInfo/createAboutInfo', {
-            title: aboutInfo.value.title,
-            subtitle: aboutInfo.value.subtitle,
-            content: aboutInfo.value.content,
-            image: aboutInfo.value.image,
-            enable: aboutInfo.value.enable
+        await apiClient.post('/api/bulletinBoard/createBulletinBoard', {
+            subject: bulletinBoard.value.subject,
+            announceDate: bulletinBoard.value.announceDate,
+            contentData: bulletinBoard.value.contentData,
+            enable: bulletinBoard.value.enable
         }).then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             display.value = false;
@@ -176,13 +157,12 @@ const ok = async () => {
             toast.add({ severity: 'error', summary: 'Error', detail: err.message, life: 3000 });
         })
     } else {
-        await apiClient.put('/api/aboutInfo/modifyAboutInfo', {
-            id: aboutInfo.value.id,
-            title: aboutInfo.value.title,
-            subtitle: aboutInfo.value.subtitle,
-            content: aboutInfo.value.content,
-            image: aboutInfo.value.image,
-            enable: aboutInfo.value.enable
+        await apiClient.put('/api/bulletinBoard/modifyBulletinBoard', {
+            id: bulletinBoard.value.id,
+            subject: bulletinBoard.value.subject,
+            announceDate: bulletinBoard.value.announceDate,
+            contentData: bulletinBoard.value.contentData,
+            enable: bulletinBoard.value.enable
         }).then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             display.value = false;
@@ -222,7 +202,7 @@ const removeConfirm = (event: any) => {
 }
 const remove = async () => {
     const id = selectedRow.value.id;
-    await apiClient.delete('/api/aboutInfo/removeAboutInfo/' + id)
+    await apiClient.delete('/api/bulletinBoard/removeBulletinBoard/' + id)
         .then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
             selectedRow.value = null;
@@ -233,13 +213,12 @@ const remove = async () => {
         });
 }
 const resetDialog = () => {
-    aboutInfo.value = {
+    bulletinBoard.value = {
         id: null,
-        title: '',
-        subtitle: '',
+        subject: '',
+        announceDate: null,
+        contentData: '',
         enable: 'Y',
-        content: '',
-        image: '',
         createId: '',
         createDate: '',
         updateId: '',
@@ -255,18 +234,17 @@ onMounted(() => {
     width: 100%;
 }
 
-.about-photo {
-    display: flex;
-    justify-content: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
 .p-select {
     width: 100%;
 }
 
 table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.edit-info {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;

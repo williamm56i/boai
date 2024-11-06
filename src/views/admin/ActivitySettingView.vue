@@ -209,7 +209,6 @@ const openModifyDialog = async () => {
                 res.data.applyEndDate = res.data.applyEndDate ? dayjs(res.data.applyEndDate, 'YYYY/MM/DD HH:mm:ss').toDate() : null;
                 res.data.activityDate = res.data.activityDate ? dayjs(res.data.activityDate, 'YYYY/MM/DD').toDate() : null;
                 activityInfo.value = res.data;
-                activityInfo.value.content = res.data.content;
                 display.value = true;
             }).catch(err => {
                 console.error(err);
@@ -351,6 +350,7 @@ const remove = async () => {
     await apiClient.delete('/api/activityInfo/removeActivityInfo/' + id)
         .then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
+            selectedRow.value = null;
             handleSearch();
         }).catch(err => {
             console.error(err);

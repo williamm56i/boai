@@ -24,6 +24,7 @@ export interface MgrItem {
 }
 export interface DialogItem {
     header: string,
+    date?: Date,
     imageUrl: string | undefined,
     content?: string
 }
@@ -101,7 +102,7 @@ export interface BulletinBoardItem {
 }
 export interface BulletinBoard {
     id?: number | null | undefined,
-    announceDate: string,
+    announceDate: Date | null,
     subject: string,
     contentData: string,
     enable: string,

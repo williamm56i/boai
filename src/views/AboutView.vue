@@ -25,6 +25,11 @@
     <img :src="dialogInfo.imageUrl" width="100%" />
     <p>{{ dialogInfo.content }}</p>
   </Dialog>
+  <Dialog v-model:visible="msgDetailVisible" modal :header="dialogInfo.header" :style="{ width: '50%' }"
+    :breakpoints="{ '1200px': '60%', '800px': '80%' }">
+    <p>{{ dialogInfo.date }}</p>
+    <div v-html="dialogInfo.content"></div>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -39,9 +44,9 @@ import { useToast } from "primevue/usetoast";
 const router = useRouter();
 const toast = useToast();
 const dialogVisible = ref(false);
+const msgDetailVisible = ref(false);
 const loading = ref(false);
 const totalCount = ref<number>(0);
-const selectedRow = ref<any>();
 const columns = ref<ColumnItem[]>([
   {
     field: 'announceDate',
@@ -96,10 +101,12 @@ let dialogInfo = ref<DialogItem>({
   content: ''
 })
 const handleCardClick = (data: CardItem) => {
-  dialogInfo.value.header = data.title;
-  dialogInfo.value.imageUrl = data.image;
-  dialogInfo.value.content = data.content;
-  dialogVisible.value = true;
+  apiClient.get('/api/aboutInfo/getAboutInfoDetail/' + data.id).then(res => {
+    dialogInfo.value.header = res.data.title;
+    dialogInfo.value.imageUrl = res.data.image;
+    dialogInfo.value.content = res.data.content;
+    dialogVisible.value = true;
+  }).catch(err => console.log(err));
 }
 const getAboutInfo = async () => {
   await apiClient.get('/api/aboutInfo/getAll').then(async res => {
@@ -137,9 +144,13 @@ const getBulletinBoard = async () => {
   }).catch(err => console.error(err))
     .finally(() => loading.value = false);
 }
-const handleSelectedRow = (row: object) => {
-  selectedRow.value = row;
-  console.log(selectedRow.value);
+const handleSelectedRow = (row: any) => {
+    apiClient.get('/api/bulletinBoard/getBulletinBoardDetail/' + row.id).then(res => {
+    dialogInfo.value.header = res.data.subject;
+    dialogInfo.value.date = res.data.announceDate;
+    dialogInfo.value.content = res.data.contentData;
+    msgDetailVisible.value = true;
+  }).catch(err => console.error(err));
 }
 onMounted(async () => {
   const message = router.currentRoute.value.query.message;

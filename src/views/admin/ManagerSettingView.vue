@@ -212,6 +212,7 @@ const remove = async () => {
     await apiClient.delete('/api/managerInfo/removeManagerInfo/' + id)
         .then(res => {
             toast.add({ severity: 'success', summary: 'Success', detail: res.data, life: 3000 });
+            selectedRow.value = null;
             handleSearch();
         }).catch(err => {
             console.error(err);

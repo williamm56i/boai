@@ -3,11 +3,13 @@
         <AboutSettingView />
         <ManagerSettingView />
         <ActivitySettingView />
+        <BulletinBoardSettingView />
     </div>
 </template>
 <script setup lang="ts">
 import AboutSettingView from './admin/AboutSettingView.vue';
 import ActivitySettingView from './admin/ActivitySettingView.vue';
+import BulletinBoardSettingView from './admin/BulletinBoardSettingView.vue';
 import ManagerSettingView from './admin/ManagerSettingView.vue';
 
 </script>
