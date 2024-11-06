@@ -73,9 +73,9 @@ const getActivityInfo = async () => {
     fetchActivityInfoImage(actsOther.value);
 }
 const fetchActivityInfoImage = async (acts: Array<CardItem>) => {
-    for (const act of acts) {
-        act.image = await getImage(act.id);
-    }
+    acts.forEach(async act => {
+        act.image = await getImage(act.id)
+    })
 }
 const getImage = async (id: number): Promise<string> => {
   return await apiClient.get('/api/activityInfo/getImage/' + id)
