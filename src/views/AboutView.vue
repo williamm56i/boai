@@ -28,7 +28,7 @@
   <Dialog v-model:visible="msgDetailVisible" modal :header="dialogInfo.header" :style="{ width: '50%' }"
     :breakpoints="{ '1200px': '60%', '800px': '80%' }">
     <p>{{ dialogInfo.date }}</p>
-    <div v-html="dialogInfo.content"></div>
+    <div class="msgWidth" v-html="dialogInfo.content"></div>
   </Dialog>
 </template>
 
@@ -189,6 +189,10 @@ onMounted(async () => {
 
 .bulletinBoard {
   width: 80%;
+}
+
+.msgWidth *  {
+  max-width: 100%;
 }
 
 @media (max-width: 800px) {
