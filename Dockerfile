@@ -10,4 +10,5 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./cert/full_chain.crt /etc/nginx/certs/full_chain.crt
 COPY ./cert/private.key /etc/nginx/certs/private.key
 EXPOSE 80
+EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
