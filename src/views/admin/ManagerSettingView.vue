@@ -104,6 +104,7 @@ const handleSearch = async () => {
         data.value = res.data;
     }).catch(err => {
         console.error(err);
+        toast.add({ severity: 'error', summary: 'Error', detail: err.response.data, life: 3000 });
     });
 }
 const handleSelectedRow = (row: object) => {
@@ -127,7 +128,7 @@ const openModifyDialog = async () => {
                 display.value = true;
             }).catch(err => {
                 console.error(err);
-                toast.add({ severity: 'error', summary: 'Error', detail: err.data, life: 3000 });
+                toast.add({ severity: 'error', summary: 'Error', detail: err.response.data, life: 3000 });
             });
     }
 }
@@ -160,7 +161,7 @@ const ok = async () => {
             handleSearch();
         }).catch(err => {
             console.log(err);
-            toast.add({ severity: 'error', summary: 'Error', detail: err.message, life: 3000 });
+            toast.add({ severity: 'error', summary: 'Error', detail: err.response.data, life: 3000 });
         })
     } else {
         await apiClient.put('/api/managerInfo/modifyManagerInfo', {
@@ -176,7 +177,7 @@ const ok = async () => {
             handleSearch();
         }).catch(err => {
             console.log(err);
-            toast.add({ severity: 'error', summary: 'Error', detail: err.message, life: 3000 });
+            toast.add({ severity: 'error', summary: 'Error', detail: err.response.data, life: 3000 });
         })
     }
 }
@@ -216,7 +217,7 @@ const remove = async () => {
             handleSearch();
         }).catch(err => {
             console.error(err);
-            toast.add({ severity: 'error', summary: 'Error', detail: err.data, life: 3000 });
+            toast.add({ severity: 'error', summary: 'Error', detail: err.response.data, life: 3000 });
         });
 }
 const resetDialog = () => {

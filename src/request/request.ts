@@ -12,9 +12,10 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   async (config) => {
-    let token = localStorage.getItem("jwt");
+    let token = localStorage.getItem('jwt');
     if (token) {
       if(isTokenExpired(token)) {
+        localStorage.removeItem('jwt');
         token = await generateGuestToken();
       }
       config.headers.Authorization = `Bearer ${token}`;
@@ -33,8 +34,11 @@ const isTokenExpired = (token: string) => {
 };
 
 const generateGuestToken = async () => {
-  return await apiClient.get('/api/system/generateToken?account=GUEST').then(res => {
+  return await apiClient.post('/api/system/generateToken?account=GUEST', {
+    account: 'GUEST'
+  }).then(res => {
     localStorage.setItem('jwt', res.data);
+    console.log('refresh token');
     return res.data;
   }).catch(err => {
     console.error(err);
