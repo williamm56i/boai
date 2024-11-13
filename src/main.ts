@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import { createHead } from '@vueuse/head';
 // import { VueReCaptcha } from 'vue-recaptcha-v3';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './style.css';
@@ -57,6 +58,8 @@ const BoaiPreset = definePreset(Aura, Aura, {
     }
 });
 
+const head = createHead();
+
 createApp(App)
     .use(PrimeVue, {
         theme: {
@@ -65,6 +68,7 @@ createApp(App)
     })
     .use(ToastService)
     .use(ConfirmationService)
+    .use(head)
     // .use(VueReCaptcha, {
     //     siteKey: '6Ld6omkqAAAAALiIBYRtU9_dvqywGkK2bTxghQCM',
     //     loaderOptions: {
