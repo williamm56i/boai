@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '',
         name: '',
         component: () => import('../views/AboutView.vue'),
-        meta: {title: '中華民國推動博愛關懷協會', description: '中華民國推動博愛關懷協會-首頁，博愛無限、關懷永續。Association to Promote Univeral Love and Care'}
+        meta: {title: '中華民國推動博愛關懷協會', description: '中華民國推動博愛關懷協會-首頁，博愛無限、關懷永續。Association to Promote Universal Love and Care'}
       },
       {
         path: '/about',
