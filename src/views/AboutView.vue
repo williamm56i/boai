@@ -151,11 +151,11 @@ const getBulletinBoard = async () => {
 }
 const handleSelectedRow = (row: any) => {
   resetDialogInfo();
+  msgDetailVisible.value = true;
   apiClient.get('/api/bulletinBoard/getBulletinBoardDetail/' + row.id).then(res => {
     dialogInfo.value.header = res.data.subject;
     dialogInfo.value.date = res.data.announceDate;
     dialogInfo.value.content = res.data.contentData;
-    msgDetailVisible.value = true;
   }).catch(err => console.error(err));
 }
 const resetDialogInfo = () => {
