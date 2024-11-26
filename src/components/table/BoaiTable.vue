@@ -4,7 +4,7 @@
             <DataTable :paginator="paginator" :size="size" :rows="pageSize" :totalRecords="totalCount"
                 :rowsPerPageOptions="pageNumList" removableSort :value="data" scrollable :scrollHeight="tableHeight"
                 :selectionMode="selectionMode" v-model:selection="selectionRow"
-                :loading="loading" @click="handleClick">
+                :loading="loading" @rowSelect="handleClick">
                 <template #empty> No Data. </template>
                 <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header" :style="{width: col.width}"
                     :sortable="col.sortable">
