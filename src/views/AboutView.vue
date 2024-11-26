@@ -23,12 +23,16 @@
   <Dialog v-model:visible="dialogVisible" modal :header="dialogInfo.header" :style="{ width: '50%' }"
     :breakpoints="{ '1200px': '60%', '800px': '80%' }">
     <img :src="dialogInfo.imageUrl" width="100%" />
+    <Skeleton v-show="!dialogInfo.imageUrl" width="100%" height="15rem"></Skeleton>
     <p>{{ dialogInfo.content }}</p>
+    <Skeleton v-show="!dialogInfo.imageUrl" width="100%"></Skeleton>
   </Dialog>
   <Dialog v-model:visible="msgDetailVisible" modal :header="dialogInfo.header" :style="{ width: '50%' }"
     :breakpoints="{ '1200px': '60%', '800px': '80%' }">
     <p>{{ dialogInfo.date }}</p>
-    <div class="msgWidth" v-html="dialogInfo.content"></div>
+    <Skeleton v-show="!dialogInfo.content" width="30%"></Skeleton>
+    <p class="msgWidth" v-html="dialogInfo.content"></p>
+    <Skeleton v-show="!dialogInfo.content" width="100%" height="15rem"></Skeleton>
   </Dialog>
 </template>
 
@@ -97,15 +101,16 @@ const handleImageLoading = () => {
 }
 let dialogInfo = ref<DialogItem>({
   header: '',
-  imageUrl: '',
+  imageUrl: undefined,
   content: ''
 })
 const handleCardClick = (data: CardItem) => {
+  resetDialogInfo();
+  dialogVisible.value = true;
   apiClient.get('/api/aboutInfo/getAboutInfoDetail/' + data.id).then(res => {
     dialogInfo.value.header = res.data.title;
     dialogInfo.value.imageUrl = res.data.image;
     dialogInfo.value.content = res.data.content;
-    dialogVisible.value = true;
   }).catch(err => console.log(err));
 }
 const getAboutInfo = async () => {
@@ -145,12 +150,19 @@ const getBulletinBoard = async () => {
     .finally(() => loading.value = false);
 }
 const handleSelectedRow = (row: any) => {
-    apiClient.get('/api/bulletinBoard/getBulletinBoardDetail/' + row.id).then(res => {
+  resetDialogInfo();
+  apiClient.get('/api/bulletinBoard/getBulletinBoardDetail/' + row.id).then(res => {
     dialogInfo.value.header = res.data.subject;
     dialogInfo.value.date = res.data.announceDate;
     dialogInfo.value.content = res.data.contentData;
     msgDetailVisible.value = true;
   }).catch(err => console.error(err));
+}
+const resetDialogInfo = () => {
+  dialogInfo.value.content = '';
+  dialogInfo.value.date = undefined;
+  dialogInfo.value.imageUrl = undefined;
+  dialogInfo.value.header = '';
 }
 onMounted(async () => {
   const message = router.currentRoute.value.query.message;
@@ -191,7 +203,7 @@ onMounted(async () => {
   width: 80%;
 }
 
-.msgWidth *  {
+.msgWidth * {
   max-width: 100%;
 }
 
