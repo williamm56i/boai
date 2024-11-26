@@ -3,7 +3,7 @@
         <!-- header area content -->
         <div class="content">
             <div class="banner">
-                <router-link v-slot="{ navigate }" :to="'/about'" custom>
+                <router-link v-slot="{ navigate }" :to="'/'" custom>
                     <img src="/banner.png" class="large-banner" width="350px" @click="navigate"/>
                     <img src="/banner.png" class="small-banner" width="200px" @click="navigate"/>
                 </router-link>
