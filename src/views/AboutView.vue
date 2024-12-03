@@ -2,7 +2,8 @@
   <div class="about">
     <Toast />
     <section>
-      <img src="/about.jpg" width="100%" @load="handleImageLoading" v-show="isImageLoaded" />
+      <img src="/about.jpg" width="100%" class="large-about" @load="handleImageLoading" v-show="isImageLoaded" />
+      <img src="/about_small.jpg" width="100%" class="small-about" @load="handleImageLoading" v-show="isImageLoaded" />
       <Skeleton v-show="!isImageLoaded" width="100%" height="30rem"></Skeleton>
     </section>
     <section class="second">
@@ -210,6 +211,25 @@ onMounted(async () => {
 @media (max-width: 800px) {
   .bulletboard {
     width: 98%;
+  }
+}
+
+
+.large-about {
+  display: block;
+}
+
+.small-about {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .large-about {
+    display: none;
+  }
+
+  .small-about {
+    display: block;
   }
 }
 </style>
