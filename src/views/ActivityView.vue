@@ -1,14 +1,14 @@
 <template>
-    <Fieldset legend="2024" :toggleable="true">
+    <Fieldset legend="2025" :toggleable="true">
         <div class="act-container">
-            <div class="act" v-for="act in acts2024 ">
+            <div class="act" v-for="act in acts2025 ">
                 <ActCard :title="act.title" :image-url="act.image" :subtitle="act.subtitle" @click="handleCardClick(act.id)"></ActCard>
             </div>
         </div>
     </Fieldset>
-    <Fieldset legend="2023" :toggleable="true" :collapsed="true">
+    <Fieldset legend="2024" :toggleable="true">
         <div class="act-container">
-            <div class="act" v-for="act in acts2023 ">
+            <div class="act" v-for="act in acts2024 ">
                 <ActCard :title="act.title" :image-url="act.image" :subtitle="act.subtitle" @click="handleCardClick(act.id)"></ActCard>
             </div>
         </div>
@@ -28,7 +28,7 @@ import { CardItem } from '../interfaces/interface';
 import { useRouter } from 'vue-router';
 import apiClient from '../request/request';
 const router = useRouter();
-const acts2024  = ref<CardItem[]>([
+const acts2025 = ref<CardItem[]>([
     {
         id: 1,
         title: '',
@@ -48,7 +48,7 @@ const acts2024  = ref<CardItem[]>([
         image: ''
     }
 ]);
-const acts2023 = ref<CardItem[]>([]);
+const acts2024  = ref<CardItem[]>([]);
 const actsOther = ref<CardItem[]>([]);
 const handleCardClick = (id: number) => {
     router.push('/activityDetail/' + id);
@@ -56,20 +56,20 @@ const handleCardClick = (id: number) => {
 const getActivityInfo = async () => {
 
     const res = await apiClient.get('/api/activityInfo/getAll')
+        acts2025.value = [];
         acts2024.value = [];
-        acts2023.value = [];
         actsOther.value = [];
         for (const act of res.data) {
-            if (act.activityGroup === '2024') {
+            if (act.activityGroup === '2025') {
+                acts2025.value.push(act);
+            } else if (act.activityGroup === '2024') {
                 acts2024.value.push(act);
-            } else if (act.activityGroup === '2023') {
-                acts2023.value.push(act);
             } else {
                 actsOther.value.push(act);
             }
         };
+    fetchActivityInfoImage(acts2025.value);
     fetchActivityInfoImage(acts2024.value);
-    fetchActivityInfoImage(acts2023.value);
     fetchActivityInfoImage(actsOther.value);
 }
 const fetchActivityInfoImage = async (acts: Array<CardItem>) => {
