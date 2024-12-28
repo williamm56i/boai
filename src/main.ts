@@ -63,7 +63,10 @@ const head = createHead();
 createApp(App)
     .use(PrimeVue, {
         theme: {
-            preset: BoaiPreset
+            preset: BoaiPreset,
+            options: {
+                darkModeSelector: false || 'none'
+            }
         }
     })
     .use(ToastService)
