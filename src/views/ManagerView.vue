@@ -1,8 +1,10 @@
 <template>
     <div class="mgr">
         <div class="person" v-for="mgr in managers">
-            <MgrInfo :position="mgr.position" :image-url="mgr.image" :title="mgr.title" :name="mgr.name"
-                :description="mgr.description1" :description2="mgr.description2"></MgrInfo>
+            <div v-animateonscroll="{ enterClass: 'fadein'}" class="animation-duration-500">
+                <MgrInfo :position="mgr.position" :image-url="mgr.image" :title="mgr.title" :name="mgr.name"
+                    :description="mgr.description1" :description2="mgr.description2"></MgrInfo>
+            </div>
         </div>
     </div>
 </template>
