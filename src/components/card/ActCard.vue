@@ -1,8 +1,10 @@
 <template>
     <Card>
         <template #header>
-            <img :src="imageUrl" width="80%" @load="handleImageLoading" v-show="isImageLoaded" />
-            <Skeleton v-show="!isImageLoaded" width="100%" height="14rem"></Skeleton>
+            <div class="image-container">
+                <img :src="imageUrl" @load="handleImageLoading" v-show="isImageLoaded" />
+                <Skeleton v-show="!isImageLoaded" width="100%" height="14rem"></Skeleton>
+            </div>
         </template>
         <template #subtitle>
             {{ subtitle }}
@@ -34,5 +36,17 @@ const handleImageLoading = () => {
 }
 .p-card:hover {
     transform: translate(-5px, -5px);
+}
+.image-container {
+    width: 80%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
 }
 </style>

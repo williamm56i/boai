@@ -62,6 +62,10 @@ button:focus-visible {
 .p-card {
   margin: 5px 5px 5px 5px;
 }
+.p-card-header {
+  display: flex;
+  justify-content: center;
+}
 .p-breadcrumb {
   margin: 5px 5px 5px 5px;
 }
