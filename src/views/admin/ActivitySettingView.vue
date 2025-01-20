@@ -22,11 +22,11 @@
         <Dialog v-model:visible="display" modal :header="dialogType === 'C' ? '新增' : '維護'" :style="{ width: '50%' }"
             :breakpoints="{ '1200px': '70%', '800px': '100%' }">
             <div for="title">主題</div>
-            <InputText id="title" v-model="activityInfo.title" />
+            <InputText id="title" v-model="activityInfo.title" placeholder="範例：小小科學家"/>
             <div for="subtitle">活動資訊</div>
-            <InputText id="subtitle" v-model="activityInfo.subtitle" />
+            <InputText id="subtitle" v-model="activityInfo.subtitle" placeholder="範例：2025.01.01 (一) 00:00-00:00 活動地點"/>
             <div for="activityGroup">活動分類</div>
-            <InputText id="activityGroup" v-model="activityInfo.activityGroup" maxlength="4" />
+            <InputText id="activityGroup" v-model="activityInfo.activityGroup" maxlength="4" placeholder="範例：2025"/>
             <div for="activityDate">活動日</div>
             <td>
                 <DatePicker id="datepicker" placeholder="yyyy/MM/dd" v-model="activityInfo.activityDate"
