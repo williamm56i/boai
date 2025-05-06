@@ -63,7 +63,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "後台管理",
         component: () => import("../views/AdminView.vue"),
         meta: { title: "後台管理", description: "中華民國推動博愛關懷協會" },
-        beforeEnter: (to, from, next) => {
+        beforeEnter: (_to, _from, next) => {
           const jwt = localStorage.getItem("jwt");
           if (jwt) {
             const payload = jwtDecode<JwtPayload>(jwt);
