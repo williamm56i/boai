@@ -29,6 +29,10 @@
           <td>(03)376-5660</td>
         </tr>
         <tr>
+          <td>訪客人次：</td>
+          <td>{{ visitorCount }}</td>
+        </tr>
+        <tr>
           <td colspan="2">Copyright®中華民國推動博愛關懷協會</td>
         </tr>
       </table>
@@ -37,7 +41,23 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import apiClient from '../../request/request';
 
+const visitorCount = ref<number>(0);
+
+const getVisitorCount = () => {
+  apiClient.get('/api/system/getVisitorCount')
+    .then(response => {
+      visitorCount.value = response.data;
+    })
+    .catch(error => {
+      console.error('Error fetching visitor count:', error);
+    });
+}
+onMounted(() => {
+  getVisitorCount();
+});
 </script>
 
 <style scoped>
