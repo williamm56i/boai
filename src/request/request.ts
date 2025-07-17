@@ -27,6 +27,28 @@ apiClient.interceptors.request.use(
   }
 );
 
+apiClient.interceptors.response.use(
+  (response) => {
+    if (response.status !== 200) {
+      console.error("API Error:", response);
+    }
+    if (response.data === 401 || response.data === 403) {
+      localStorage.removeItem('jwt');
+      console.error("Unauthorized access, jwt removed.");
+      window.location.href = '/'; 
+    }
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401 || error.response.status === 403) {
+      localStorage.removeItem('jwt');
+      console.error("Unauthorized access, jwt removed.");
+      window.location.href = '/'; 
+    }
+    return Promise.reject(error);
+  }
+)
+
 const isTokenExpired = (token: string) => {
   const decoded = jwtDecode<JwtPayload>(token);
   const currentTime = Math.floor(Date.now() / 1000); // 以秒為單位的當前時間
