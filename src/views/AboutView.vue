@@ -19,6 +19,16 @@
           :loading="loading" :tableHeight="'222px'" :selectionMode="'single'" @selected-row="handleSelectedRow"
           class=bulletinBoard></BoaiTable>
       </div>
+      <div>
+        <h2>最新活動</h2>
+      </div>
+      <Carousel :value="latestActivities" :numVisible="numVisible" :numScroll="1"
+        :responsiveOptions="responsiveOptions">
+        <template #item="slotProps">
+          <ActCard :title="slotProps.data.title" :subtitle="slotProps.data.subtitle" :image-url="slotProps.data.image"
+            @click="handleActClick(slotProps.data.id)"></ActCard>
+        </template>
+      </Carousel>
     </section>
   </div>
   <Dialog v-model:visible="dialogVisible" modal :header="dialogInfo.header" :style="{ width: '50%' }"
@@ -45,6 +55,7 @@ import BoaiTable from '../components/table/BoaiTable.vue';
 import apiClient from '../request/request';
 import { useRouter } from 'vue-router';
 import { useToast } from "primevue/usetoast";
+import ActCard from '../components/card/ActCard.vue';
 
 const router = useRouter();
 const toast = useToast();
@@ -52,6 +63,26 @@ const dialogVisible = ref(false);
 const msgDetailVisible = ref(false);
 const loading = ref(false);
 const totalCount = ref<number>(0);
+const latestActivities = ref<CardItem[]>([
+  {
+    id: 1,
+    title: '',
+    subtitle: '',
+    image: ''
+  },
+  {
+    id: 2,
+    title: '',
+    subtitle: '',
+    image: ''
+  },
+  {
+    id: 3,
+    title: '',
+    subtitle: '',
+    image: ''
+  }
+]);
 const columns = ref<ColumnItem[]>([
   {
     field: 'announceDate',
@@ -124,10 +155,10 @@ const getAboutInfo = async () => {
 }
 const fetchAboutInfoImage = async () => {
   products.value.forEach(async product => {
-    product.image = await getImage(product.id)
+    product.image = await getAboutInfoImage(product.id)
   })
 }
-const getImage = async (id: number): Promise<string> => {
+const getAboutInfoImage = async (id: number): Promise<string> => {
   return apiClient.get('/api/aboutInfo/getImage/' + id)
     .then(res => {
       return res.data;
@@ -165,6 +196,26 @@ const resetDialogInfo = () => {
   dialogInfo.value.imageUrl = undefined;
   dialogInfo.value.header = '';
 }
+const getLatestActivities = async () => {
+  await apiClient.get('/api/activityInfo/getLatestActivities/3').then(async res => {
+    latestActivities.value = res.data;
+    await fetchActivityInfoImage();
+  });
+}
+const fetchActivityInfoImage = async () => {
+  latestActivities.value.forEach(async product => {
+    product.image = await getActivityInfoImage(product.id)
+  })
+}
+const getActivityInfoImage = async (id: number): Promise<string> => {
+  return apiClient.get('/api/activityInfo/getImage/' + id)
+    .then(res => {
+      return res.data;
+    }).catch(err => console.log(err));
+}
+const handleActClick = (id: number) => {
+  router.push('/activityDetail/' + id);
+}
 onMounted(async () => {
   const message = router.currentRoute.value.query.message;
   if (message) {
@@ -174,6 +225,7 @@ onMounted(async () => {
   await getAboutInfo();
   initCarouselNumVisible();
   await getBulletinBoard();
+  await getLatestActivities();
 })
 </script>
 
