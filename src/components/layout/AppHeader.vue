@@ -4,8 +4,8 @@
         <div class="content">
             <div class="banner">
                 <router-link v-slot="{ navigate }" :to="'/'" custom>
-                    <img src="/banner.png" class="large-banner" width="350px" @click="navigate"/>
-                    <img src="/banner.png" class="small-banner" width="200px" @click="navigate"/>
+                    <img src="/banner.png" class="large-banner" width="350px" @click="navigate" />
+                    <img src="/banner.png" class="small-banner" width="200px" @click="navigate" />
                 </router-link>
             </div>
             <div class="menu">
@@ -20,7 +20,7 @@
                     </template>
                 </TabMenu>
                 <Button type="button" icon="pi pi-bars" @click="toggle" aria-haspopup="true"
-                    aria-controls="overlay_menu"></Button>
+                    aria-controls="overlay_menu" class="menu-toggle-btn p-button-icon-only"></Button>
                 <Menu ref="popupMenu" id="overlay_menu" :model="items" :popup="true">
                     <template #item="{ item, props }">
                         <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
@@ -53,11 +53,11 @@ const authCheck = () => {
     if (jwt) {
         const payload = jwtDecode<JwtPayload>(jwt);
         if (payload.roles.includes('ROLE_ADMIN')) {
-            items.value.push({label: '後台管理', route: '/admin'});
+            items.value.push({ label: '後台管理', route: '/admin' });
         }
     }
 }
-onMounted( () => {
+onMounted(() => {
     authCheck();
 })
 </script>
@@ -67,6 +67,7 @@ onMounted( () => {
     height: 100px;
     background-color: #ffffff;
 }
+
 .content {
     position: absolute;
     left: 8%;
@@ -103,6 +104,19 @@ onMounted( () => {
     display: none;
 }
 
+.p-button.p-button-icon-only .p-button-label {
+    display: none !important;
+}
+
+.p-button.p-button-icon-only {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+}
+
 @media (max-width: 800px) {
     .header {
         height: 60px;
@@ -133,7 +147,7 @@ onMounted( () => {
         display: flex;
         flex-direction: row-reverse;
         padding-top: 5px;
-        padding-right:5px;
+        padding-right: 5px;
         width: 100%;
     }
 
@@ -144,8 +158,16 @@ onMounted( () => {
     .p-button {
         display: block;
         background-color: rgba(23, 187, 239);
+        border-color: rgba(23, 187, 239);
         width: 35px;
         height: 35px;
     }
+
+}
+
+@media (min-width: 800px) {
+  .menu-toggle-btn {
+    display: none !important;
+  }
 }
 </style>
