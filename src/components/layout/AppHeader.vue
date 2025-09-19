@@ -38,12 +38,14 @@
 <script setup lang="ts">
 import { jwtDecode } from "jwt-decode";
 import { JwtPayload, MenuItem } from '../../interfaces/interface';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 const items = ref<MenuItem[]>([
     { label: '關於我們', route: '/about' },
     { label: '經營團隊', route: '/manager' },
     { label: '活動資訊', route: '/activity' },
 ]);
+const route = useRoute();
 const popupMenu = ref();
 const toggle = (event: any) => {
     popupMenu.value.toggle(event);
@@ -54,12 +56,22 @@ const authCheck = () => {
         const payload = jwtDecode<JwtPayload>(jwt);
         if (payload.roles.includes('ROLE_ADMIN')) {
             items.value.push({ label: '後台管理', route: '/admin' });
+        } else {
+            items.value = items.value.filter(item => item.route !== '/admin');
         }
     }
 }
-onMounted(() => {
-    authCheck();
-})
+watch(
+    () => route.fullPath,
+    (newPath) => {
+        console.log('route changed:', newPath);
+        if (newPath === '/') {
+            authCheck();
+        }
+    }
+);
+onMounted(() => authCheck);
+
 </script>
 
 <style scoped>
@@ -166,8 +178,8 @@ onMounted(() => {
 }
 
 @media (min-width: 800px) {
-  .menu-toggle-btn {
-    display: none !important;
-  }
+    .menu-toggle-btn {
+        display: none !important;
+    }
 }
 </style>

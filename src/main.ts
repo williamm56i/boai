@@ -39,6 +39,7 @@ import DatePicker from 'primevue/datepicker';
 import RadioButton from 'primevue/radiobutton';
 import Editor from 'primevue/editor';
 import Tooltip from 'primevue/tooltip';
+import Toolbar from 'primevue/toolbar';
 import AnimateOnScroll from 'primevue/animateonscroll';
 
 const BoaiPreset = definePreset(Aura, Aura, {
@@ -107,6 +108,7 @@ createApp(App)
     .component('DatePicker', DatePicker)
     .component('RadioButton', RadioButton)
     .component('Editor', Editor)
+    .component('Toolbar', Toolbar)
     .directive('Tooltip', Tooltip)
     .directive('animateonscroll', AnimateOnScroll)
     .use(router)

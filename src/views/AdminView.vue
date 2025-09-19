@@ -1,4 +1,10 @@
 <template>
+    <Toolbar>
+        <template #end>
+            <!-- <Button v-tooltip.bottom="'使用者維護'" icon="pi pi-user-edit" severity="secondary" text /> -->
+            <Button v-tooltip.bottom="'登出'" icon="pi pi-sign-out" severity="secondary" text @click="logout" />
+        </template>
+    </Toolbar>
     <div class="admin-panel">
         <AboutSettingView />
         <ManagerSettingView />
@@ -11,7 +17,14 @@ import AboutSettingView from './admin/AboutSettingView.vue';
 import ActivitySettingView from './admin/ActivitySettingView.vue';
 import BulletinBoardSettingView from './admin/BulletinBoardSettingView.vue';
 import ManagerSettingView from './admin/ManagerSettingView.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+
+const logout = () => {
+    localStorage.removeItem('jwt');
+    router.push('/');
+};
 </script>
 <style scoped>
 .admin-panel {
