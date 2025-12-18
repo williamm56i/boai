@@ -1,4 +1,11 @@
 <template>
+    <Fieldset legend="2026" :toggleable="true">
+        <div class="act-container">
+            <div class="act" v-for="act in acts2026 ">
+                <ActCard :title="act.title" :image-url="act.image" :subtitle="act.subtitle" @click="handleCardClick(act.id)"></ActCard>
+            </div>
+        </div>
+    </Fieldset>
     <Fieldset legend="2025" :toggleable="true">
         <div class="act-container">
             <div class="act" v-for="act in acts2025 ">
@@ -6,7 +13,7 @@
             </div>
         </div>
     </Fieldset>
-    <Fieldset legend="2024" :toggleable="true">
+    <Fieldset legend="2024" :toggleable="true" :collapsed="true">
         <div class="act-container">
             <div class="act" v-for="act in acts2024 ">
                 <ActCard :title="act.title" :image-url="act.image" :subtitle="act.subtitle" @click="handleCardClick(act.id)"></ActCard>
@@ -28,26 +35,8 @@ import { CardItem } from '../interfaces/interface';
 import { useRouter } from 'vue-router';
 import apiClient from '../request/request';
 const router = useRouter();
-const acts2025 = ref<CardItem[]>([
-    {
-        id: 1,
-        title: '',
-        subtitle: '',
-        image: ''
-    },
-    {
-        id: 2,
-        title: '',
-        subtitle: '',
-        image: ''
-    },
-    {
-        id: 3,
-        title: '',
-        subtitle: '',
-        image: ''
-    }
-]);
+const acts2026 = ref<CardItem[]>([]);
+const acts2025 = ref<CardItem[]>([]);
 const acts2024  = ref<CardItem[]>([]);
 const actsOther = ref<CardItem[]>([]);
 const handleCardClick = (id: number) => {
@@ -60,7 +49,9 @@ const getActivityInfo = async () => {
         acts2024.value = [];
         actsOther.value = [];
         for (const act of res.data) {
-            if (act.activityGroup === '2025') {
+            if (act.activityGroup === '2026') {
+                acts2026.value.push(act);
+            } else if (act.activityGroup === '2025') {
                 acts2025.value.push(act);
             } else if (act.activityGroup === '2024') {
                 acts2024.value.push(act);
@@ -68,6 +59,7 @@ const getActivityInfo = async () => {
                 actsOther.value.push(act);
             }
         };
+    fetchActivityInfoImage(acts2026.value);
     fetchActivityInfoImage(acts2025.value);
     fetchActivityInfoImage(acts2024.value);
     fetchActivityInfoImage(actsOther.value);

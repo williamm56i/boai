@@ -24,9 +24,9 @@
             <div for="title">主題</div>
             <InputText id="title" v-model="activityInfo.title" placeholder="範例：小小科學家"/>
             <div for="subtitle">活動資訊</div>
-            <InputText id="subtitle" v-model="activityInfo.subtitle" placeholder="範例：2025.01.01 (一) 00:00-00:00 活動地點"/>
+            <InputText id="subtitle" v-model="activityInfo.subtitle" placeholder="範例：2026.01.01 (四) 00:00-00:00 活動地點"/>
             <div for="activityGroup">活動分類</div>
-            <InputText id="activityGroup" v-model="activityInfo.activityGroup" maxlength="4" placeholder="範例：2025"/>
+            <InputText id="activityGroup" v-model="activityInfo.activityGroup" maxlength="4" placeholder="範例：2026"/>
             <div for="activityDate">活動日</div>
             <td>
                 <DatePicker id="datepicker" placeholder="yyyy/MM/dd" v-model="activityInfo.activityDate"
