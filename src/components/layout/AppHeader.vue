@@ -54,8 +54,10 @@ const authCheck = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
         const payload = jwtDecode<JwtPayload>(jwt);
-        if (payload.roles.includes('ROLE_ADMIN') && !items.value.find(item => item.route === '/admin')) {
-            items.value.push({ label: '後台管理', route: '/admin' });
+        if (payload.roles.includes('ROLE_ADMIN')) {
+            if (!items.value.find(item => item.route === '/admin')) {
+                items.value.push({ label: '後台管理', route: '/admin' });
+            }
         } else {
             items.value = items.value.filter(item => item.route !== '/admin');
         }
