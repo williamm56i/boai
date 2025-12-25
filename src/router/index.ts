@@ -32,6 +32,26 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/news",
+        name: "最新消息",
+        component: () => import("../views/NewsView.vue"),
+        meta: {
+          title: "最新消息",
+          description:
+            "中華民國推動博愛關懷協會-關於我們，博愛無限、關懷永續。Association to Promote Univeral Love and Care",
+        },
+      },
+      {
+        path: "/newsDetail/:id",
+        name: "消息資訊",
+        component: () => import("../views/NewsDetailView.vue"),
+        meta: {
+          title: "消息資訊",
+          description:
+            "中華民國推動博愛關懷協會-關於我們，博愛無限、關懷永續。Association to Promote Univeral Love and Care",
+        },
+      },
+      {
         path: "/manager",
         name: "經營團隊",
         component: () => import("../views/ManagerView.vue"),

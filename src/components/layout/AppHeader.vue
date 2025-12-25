@@ -42,6 +42,7 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 const items = ref<MenuItem[]>([
     { label: '關於我們', route: '/about' },
+    { label: '最新消息', route: '/news' },
     { label: '經營團隊', route: '/manager' },
     { label: '活動資訊', route: '/activity' },
 ]);
