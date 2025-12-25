@@ -63,30 +63,11 @@ const dialogVisible = ref(false);
 const msgDetailVisible = ref(false);
 const loading = ref(false);
 const totalCount = ref<number>(0);
-const latestActivities = ref<CardItem[]>([
-  {
-    id: 1,
-    title: '',
-    subtitle: '',
-    image: ''
-  },
-  {
-    id: 2,
-    title: '',
-    subtitle: '',
-    image: ''
-  },
-  {
-    id: 3,
-    title: '',
-    subtitle: '',
-    image: ''
-  }
-]);
+const latestActivities = ref<CardItem[]>([]);
 const columns = ref<ColumnItem[]>([
   {
     field: 'announceDate',
-    header: '日期'
+    header: '公告日期'
   },
   {
     field: 'subject',
@@ -94,26 +75,7 @@ const columns = ref<ColumnItem[]>([
   }
 ]);
 const data = ref<BulletinBoardItem[]>([]);
-const products = ref<CardItem[]>([
-  {
-    id: 1,
-    title: '',
-    subtitle: '',
-    image: ''
-  },
-  {
-    id: 2,
-    title: '',
-    subtitle: '',
-    image: ''
-  },
-  {
-    id: 3,
-    title: '',
-    subtitle: '',
-    image: ''
-  }
-]);
+const products = ref<CardItem[]>([]);
 const numVisible = ref(3);
 const responsiveOptions = ref([
   {
@@ -261,7 +223,7 @@ onMounted(async () => {
 }
 
 @media (max-width: 800px) {
-  .bulletboard {
+  .bulletinBoard {
     width: 98%;
   }
 }
