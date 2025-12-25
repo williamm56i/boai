@@ -16,7 +16,6 @@ const router = useRouter();
 onMounted(() => {
   router.push('/');
 });
-// 在 <script setup> 中，组件自动注册
 </script>
 
 <style scoped>
