@@ -43,6 +43,13 @@ onMounted(async () => {
     text-align: left;
 }
 
+.align-left :deep(img) {
+    max-width: 100% ;
+    width: 100% ;
+    height: auto ;
+    display: block;
+}
+
 .p-panel {
     width: 60%;
 }
