@@ -11,8 +11,8 @@ import AppHeader from './AppHeader.vue';
 import AppContent from './AppContent.vue';
 import AppFooter from './AppFooter.vue';
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-const router = useRouter();
+// import { useRouter } from 'vue-router';
+// const router = useRouter();
 onMounted(() => {
   // router.push('/');
 });
