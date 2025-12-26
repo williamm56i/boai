@@ -13,7 +13,7 @@
             <div v-html="content" class="align-left" style="margin-top: 30px"></div>
             <template #footer>
                 <Button label="我要報名" icon="pi pi-send" @click="openApplyForm" :disabled="disabledFlag" />
-                <Button label="報名查詢" icon="pi pi-search" @click="openSearchForm" severity="secondary"/>
+                <Button label="報名查詢" icon="pi pi-search" @click="openSearchForm" severity="secondary" />
             </template>
         </Panel>
         <Dialog v-model:visible="display" modal :header="dialogTitle" :style="{ width: '50%' }"
@@ -22,7 +22,7 @@
                 <div for="searchName">姓名</div>
                 <InputText id="searchName" v-model="searchName" />
                 <div class="action-tool">
-                    <Button label="查詢" icon="pi pi-search" @click="checkApplyStatus" ></Button>
+                    <Button label="查詢" icon="pi pi-search" @click="checkApplyStatus"></Button>
                 </div>
             </div>
             <div v-else>
@@ -30,11 +30,12 @@
                 <InputText id="applyName" v-model="applyForm.applyName" />
                 <div for="applySex"><span style="color: red;">*</span> 性別</div>
                 <div style="height: 37px; display: flex;align-items: center;">
-                    <RadioButton v-model="applyForm.applySex" inputId="male" name="male" value="male" ></RadioButton>
+                    <RadioButton v-model="applyForm.applySex" inputId="male" name="male" value="male"></RadioButton>
                     <label for="male" style="margin-left: 10px">男</label>
-                    <RadioButton v-model="applyForm.applySex" inputId="female" name="female" value="female" ></RadioButton>
+                    <RadioButton v-model="applyForm.applySex" inputId="female" name="female" value="female">
+                    </RadioButton>
                     <label for="female" style="margin-left: 10px">女</label>
-                    <RadioButton v-model="applyForm.applySex" inputId="none" name="none" value="none" ></RadioButton>
+                    <RadioButton v-model="applyForm.applySex" inputId="none" name="none" value="none"></RadioButton>
                     <label for="none" style="margin-left: 10px">其他</label>
                 </div>
                 <div for="applyPhone"><span style="color: red;">*</span> 聯絡電話</div>
@@ -45,13 +46,14 @@
                 <InputText id="applyResidence" v-model="applyForm.applyResidence" />
                 <div for="infoFrom">如何得知本活動</div>
                 <div style="height: 37px; display: flex;align-items: center;">
-                    <RadioButton v-model="applyForm.infoFrom" inputId="fb" name="fb" value="fb" ></RadioButton>
+                    <RadioButton v-model="applyForm.infoFrom" inputId="fb" name="fb" value="fb"></RadioButton>
                     <label for="fb" style="margin-left: 10px">Facebook</label>
-                    <RadioButton v-model="applyForm.infoFrom" inputId="line" name="line" value="line" ></RadioButton>
+                    <RadioButton v-model="applyForm.infoFrom" inputId="line" name="line" value="line"></RadioButton>
                     <label for="line" style="margin-left: 10px">LINE文宣</label>
-                    <RadioButton v-model="applyForm.infoFrom" inputId="friend" name="friend" value="friend" ></RadioButton>
+                    <RadioButton v-model="applyForm.infoFrom" inputId="friend" name="friend" value="friend">
+                    </RadioButton>
                     <label for="friend" style="margin-left: 10px">親友介紹</label>
-                    <RadioButton v-model="applyForm.infoFrom" inputId="other" name="other" value="other" ></RadioButton>
+                    <RadioButton v-model="applyForm.infoFrom" inputId="other" name="other" value="other"></RadioButton>
                     <label for="other" style="margin-left: 10px">其他</label>
                 </div>
                 <div for="introducerName">介紹人</div>
@@ -66,7 +68,7 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 // import { useReCaptcha } from 'vue-recaptcha-v3';
 import { useToast } from "primevue/usetoast";
 import { ApplyForm } from '../interfaces/interface.ts';
@@ -75,9 +77,10 @@ import dayjs from 'dayjs';
 
 // const { executeRecaptcha } = useReCaptcha()!;
 const toast = useToast();
-const router = useRoute();
+const route = useRoute();
+const router = useRouter();
 const display = ref(false);
-const id = router.params.id;
+const id = route.params.id;
 const title = ref('');
 const subtitle = ref('');
 const content = ref('');
@@ -179,13 +182,17 @@ const enableApplyButton = (start: Date | undefined, end: Date | undefined) => {
 }
 const getActivityInfoDetail = async () => {
     await apiClient.get('/api/activityInfo/getActivityInfoDetail/' + id).then(res => {
-        title.value = res.data.title;
-        subtitle.value = res.data.subtitle;
-        content.value = res.data.content;
-        image.value = res.data.image;
-        applyStartDate.value = res.data.applyStartDate ? dayjs(res.data.applyStartDate, 'YYYY/MM/DD HH:mm:ss').toDate() : undefined;
-        applyEndDate.value = res.data.applyEndDate ? dayjs(res.data.applyEndDate, 'YYYY/MM/DD HH:mm:ss').toDate() : undefined;
-        enableApplyButton(applyStartDate.value, applyEndDate.value);
+        if (!res.data) {
+            router.push('/activity');
+        } else {
+            title.value = res.data.title;
+            subtitle.value = res.data.subtitle;
+            content.value = res.data.content;
+            image.value = res.data.image;
+            applyStartDate.value = res.data.applyStartDate ? dayjs(res.data.applyStartDate, 'YYYY/MM/DD HH:mm:ss').toDate() : undefined;
+            applyEndDate.value = res.data.applyEndDate ? dayjs(res.data.applyEndDate, 'YYYY/MM/DD HH:mm:ss').toDate() : undefined;
+            enableApplyButton(applyStartDate.value, applyEndDate.value);
+        }
     }).catch(err => console.error(err));
 }
 const checkApplyStatus = async () => {

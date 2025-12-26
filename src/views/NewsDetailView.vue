@@ -14,19 +14,24 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import apiClient from '../request/request.ts';
 
-const router = useRoute();
-const id = router.params.id;
+const route = useRoute();
+const router = useRouter();
+const id = route.params.id;
 const subject = ref('');
 const announceDate = ref('');
 const contentData = ref('');
 const getBulletinBoardDetail = async () => {
     await apiClient.get('/api/bulletinBoard/getBulletinBoardDetail/' + id).then(res => {
-        subject.value = res.data.subject;
-        announceDate.value = res.data.announceDate;
-        contentData.value = res.data.contentData;
+        if (!res.data) {
+            router.push('/news');
+        } else {
+            subject.value = res.data.subject;
+            announceDate.value = res.data.announceDate;
+            contentData.value = res.data.contentData;
+        }
     }).catch(err => console.error(err));
 }   
 onMounted(async () => {
