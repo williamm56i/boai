@@ -68,10 +68,9 @@ watch(
     () => route.fullPath,
     (newPath) => {
         console.log('route changed:', newPath);
-        if (newPath === '/') {
-            authCheck();
-        }
-    }
+        authCheck();
+    },
+    { immediate: true }
 );
 onMounted(() => authCheck);
 
