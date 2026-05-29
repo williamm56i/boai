@@ -59,6 +59,10 @@ onUnmounted(() => {
 <style scoped>
 .news {
     display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    min-height: 100%;
+    align-items: center;
     justify-content: center;
     background: linear-gradient(to left, rgb(238, 226, 171) 40%, rgba(253, 208, 0, 0) 70%);
 }
@@ -69,6 +73,7 @@ onUnmounted(() => {
 
 .bulletinBoard {
     width: 80%;
+    margin: 0 auto;
 }
 
 @media (max-width: 1200px) {

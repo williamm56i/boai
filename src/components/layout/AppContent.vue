@@ -11,8 +11,15 @@
 
 <style>
 .main {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  min-height: 100%;
   background: #ffffff;
   text-align: center;
+}
+
+.main > * {
+  flex: 1 0 auto;
 }
 </style>

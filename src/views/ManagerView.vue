@@ -76,6 +76,8 @@ onUnmounted(() => {
 .mgr {
     display: flex;
     flex-wrap: wrap;
+    flex: 1 0 auto;
+    min-height: 100%;
     background: linear-gradient(to left, rgb(161, 221, 239) 40%, rgba(23, 187, 239, 0) 70%);
 }
 
