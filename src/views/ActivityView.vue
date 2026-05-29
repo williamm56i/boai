@@ -6,7 +6,7 @@
             </div>
         </div>
     </Fieldset>
-    <Fieldset legend="2025" :toggleable="true">
+    <Fieldset legend="2025" :toggleable="true" :collapsed="true">
         <div class="act-container">
             <div class="act" v-for="act in acts2025 ">
                 <ActCard :title="act.title" :image-url="act.image" :subtitle="act.subtitle" @click="handleCardClick(act.id)"></ActCard>
